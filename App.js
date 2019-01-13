@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import Icon from 'react-native-vector-icons/vector-icons/Ionicons';
+import Icon from '@expo/vector-icons/Ionicons';
 
 import { 
   createAppContainer, 
