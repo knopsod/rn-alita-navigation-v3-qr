@@ -26,7 +26,7 @@ class WelcomeScreen extends React.Component {
         <TextInput placeholder="Username" style={styles.textInput} />
         <TextInput placeholder="Password" style={styles.textInput} />
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')}>
-          <Text>Sign-in as นักศึกษา</Text>
+          <Text>Sign-in as นักศึกษา edited</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')}>
           <Text>Sign-in as สโมสร</Text>
