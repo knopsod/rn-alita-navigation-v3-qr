@@ -26,7 +26,10 @@ const UsersStack = createStackNavigator(
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
-          )
+          ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
         }
       }
     }
@@ -35,7 +38,12 @@ const UsersStack = createStackNavigator(
 
 const UsersTabNavigator = createBottomTabNavigator(
   {
-    Users: UsersStack
+    Users: {
+      screen: UsersStack,
+      navigationOptions: {
+        tabBarVisible: false
+      }  
+    }
   }, {
     navigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state.routes[navigation.state.index];

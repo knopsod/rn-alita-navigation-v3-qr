@@ -1,25 +1,51 @@
 import React from 'react'
 import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  Button,
+  Icon,
+  Body,
+  Left,
+  Right,
+  Item,
+  Input,
+  Form
+} from "native-base";
 
 class WelcomeScreen extends React.Component {
   render() {
     return (
-      <View style={{...styles.container}}>
-        <TextInput placeholder="Username" style={styles.textInput} />
-        <TextInput placeholder="Password" style={styles.textInput} />
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('StudentRole')}>
-          <Text>Sign-in as นักศึกษา</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('ClubRole')}>
-          <Text>Sign-in as สโมสร</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('OfficerRole')}>
-          <Text>Sign-in as เจ้าหน้าที่</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('VicePresidentRole')}>
-          <Text>Sign-in as รองคณบดีฯ</Text>
-        </TouchableOpacity>
-      </View>
+      <Container style={styles.container}>
+        <Content>
+          <Form style={{ marginTop: 200 }}>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="Username" />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="Password" secureTextEntry />
+            </Item>
+          </Form>
+          <Button block style={{ margin: 15, marginTop: 50 }}
+            onPress={() => this.props.navigation.navigate('StudentRole')}>
+            <Text>Sign In as นักศึกษา</Text>
+          </Button>
+          <Button block style={{ margin: 15 }}
+            onPress={() => this.props.navigation.navigate('ClubRole')}>
+            <Text>Sign In as สโมสร</Text>
+          </Button>
+          <Button block style={{ margin: 15 }}
+            onPress={() => this.props.navigation.navigate('OfficerRole')}>
+            <Text>Sign In as เจ้าหน้าที่</Text>
+          </Button>
+          <Button block style={{ margin: 15 }}
+            onPress={() => this.props.navigation.navigate('VicePresidentRole')}>
+            <Text>Sign In as รองคณบดี</Text>
+          </Button>
+        </Content>
+      </Container>
     );
   }
 }
@@ -28,13 +54,6 @@ export default WelcomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textInput: {
-    borderColor: 'gray',
-    borderWidth: 1
+    backgroundColor: "orange"
   }
 });

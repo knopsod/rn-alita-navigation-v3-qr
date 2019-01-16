@@ -26,7 +26,10 @@ const ReportsStack = createStackNavigator(
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
-          )
+          ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
         }
       }
     }
@@ -35,13 +38,18 @@ const ReportsStack = createStackNavigator(
 
 const VicePresidentTabNavigator = createBottomTabNavigator(
   {
-    Reports: ReportsStack
+    Reports: { 
+      screen: ReportsStack,
+      navigationOptions: {
+        tabBarVisible: false
+      }  
+    }
   }, {
     navigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state.routes[navigation.state.index];
       return {
         header: null,
-        headerTitle: routeName
+        headerTitle: routeName,
       }
     }
   }

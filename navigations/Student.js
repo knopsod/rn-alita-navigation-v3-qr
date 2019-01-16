@@ -27,7 +27,10 @@ const ScanStack = createStackNavigator(
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
-          )
+          ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
         }
       }
     }
@@ -46,7 +49,10 @@ const HistoryStack = createStackNavigator(
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
-          )
+          ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
         }
       }
     }

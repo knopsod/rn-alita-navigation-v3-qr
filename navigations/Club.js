@@ -27,7 +27,10 @@ const ActivityStack = createStackNavigator(
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
-          )
+          ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
         }
       }
     }
@@ -46,7 +49,10 @@ const ReportingStack = createStackNavigator(
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
-          )
+          ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
         }
       }
     }
