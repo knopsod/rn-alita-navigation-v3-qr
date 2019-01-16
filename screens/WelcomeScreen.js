@@ -30,19 +30,19 @@ class WelcomeScreen extends React.Component {
           </Form>
           <Button block style={{ margin: 15, marginTop: 50 }}
             onPress={() => this.props.navigation.navigate('StudentRole')}>
-            <Text>Sign In as นักศึกษา</Text>
+            <Text style={{ color: '#fff' }}>Sign In as นักศึกษา</Text>
           </Button>
           <Button block style={{ margin: 15 }}
             onPress={() => this.props.navigation.navigate('ClubRole')}>
-            <Text>Sign In as สโมสร</Text>
+            <Text style={{ color: '#fff' }}>Sign In as สโมสร</Text>
           </Button>
           <Button block style={{ margin: 15 }}
             onPress={() => this.props.navigation.navigate('OfficerRole')}>
-            <Text>Sign In as เจ้าหน้าที่</Text>
+            <Text style={{ color: '#fff' }}>Sign In as เจ้าหน้าที่</Text>
           </Button>
           <Button block style={{ margin: 15 }}
             onPress={() => this.props.navigation.navigate('VicePresidentRole')}>
-            <Text>Sign In as รองคณบดี</Text>
+            <Text style={{ color: '#fff' }}>Sign In as รองคณบดี</Text>
           </Button>
         </Content>
       </Container>

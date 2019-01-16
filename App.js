@@ -28,45 +28,12 @@ import { OfficerDrawerNavigator } from './navigations/Officer';
 import { ClubDrawerNavigator } from './navigations/Club';
 import { VicePresidentDrawerNavigator } from './navigations/VicePresident';
 
+import WelcomeScreen from './screens/WelcomeScreen';
+
 export default class App extends React.Component {
   render() {
     return (
       <AppContainer />
-    );
-  }
-}
-
-class WelcomeScreen extends React.Component {
-  render() {
-    return (
-      <Container style={styles.container}>
-        <Content>
-          <Form style={{ marginTop: 200 }}>
-            <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Username" />
-            </Item>
-            <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Password" secureTextEntry />
-            </Item>
-          </Form>
-          <Button block style={{ margin: 15, marginTop: 50 }}
-            onPress={() => this.props.navigation.navigate('StudentRole')}>
-            <Text>Sign In as นักศึกษา</Text>
-          </Button>
-          <Button block style={{ margin: 15 }}
-            onPress={() => this.props.navigation.navigate('ClubRole')}>
-            <Text>Sign In as สโมสร</Text>
-          </Button>
-          <Button block style={{ margin: 15 }}
-            onPress={() => this.props.navigation.navigate('OfficerRole')}>
-            <Text>Sign In as เจ้าหน้าที่</Text>
-          </Button>
-          <Button block style={{ margin: 15 }}
-            onPress={() => this.props.navigation.navigate('VicePresidentRole')}>
-            <Text>Sign In as รองคณบดี</Text>
-          </Button>
-        </Content>
-      </Container>
     );
   }
 }
