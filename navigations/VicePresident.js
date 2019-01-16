@@ -12,16 +12,7 @@ import {
 } from 'react-navigation';
 
 import WelcomeScreen from '../screens/WelcomeScreen';
-
-class ReportsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{...styles.container}}>
-        <Text>ReportsScreen</Text>
-      </View>
-    );
-  }
-}
+import ReportsScreen from '../screens/vicepresident/ReportsScreen';
 
 const ReportsStack = createStackNavigator(
   {

@@ -12,26 +12,8 @@ import {
 } from 'react-navigation';
 
 import WelcomeScreen from '../screens/WelcomeScreen';
-
-class ActivityScreen extends React.Component {
-  render() {
-    return (
-      <View style={{...styles.container}}>
-        <Text>ActivityScreen</Text>
-      </View>
-    );
-  }
-}
-
-class ReportingScreen extends React.Component {
-  render() {
-    return (
-      <View style={{...styles.container}}>
-        <Text>ReportingScreen</Text>
-      </View>
-    );
-  }
-}
+import ActivityScreen from '../screens/club/ActivityScreen';
+import ReportingScreen from '../screens/club/ReportingScreen';
 
 const ActivityStack = createStackNavigator(
   {

@@ -12,26 +12,8 @@ import {
 } from 'react-navigation';
 
 import WelcomeScreen from '../screens/WelcomeScreen';
-
-class ScanScreen extends React.Component {
-  render() {
-    return (
-      <View style={{...styles.container}}>
-        <Text>ScanScreen</Text>
-      </View>
-    );
-  }
-}
-
-class HistoryScreen extends React.Component {
-  render() {
-    return (
-      <View style={{...styles.container}}>
-        <Text>HistoryScreen</Text>
-      </View>
-    );
-  }
-}
+import ScanScreen from '../screens/student/ScanScreen';
+import HistoryScreen from '../screens/student/HistoryScreen';
 
 const ScanStack = createStackNavigator(
   {
