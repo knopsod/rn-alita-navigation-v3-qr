@@ -13,33 +13,23 @@ import {
 
 import WelcomeScreen from '../screens/WelcomeScreen';
 
-class ScanScreen extends React.Component {
+class ReportsScreen extends React.Component {
   render() {
     return (
       <View style={{...styles.container}}>
-        <Text>ScanScreen</Text>
+        <Text>ReportsScreen</Text>
       </View>
     );
   }
 }
 
-class HistoryScreen extends React.Component {
-  render() {
-    return (
-      <View style={{...styles.container}}>
-        <Text>HistoryScreen</Text>
-      </View>
-    );
-  }
-}
-
-const ScanStack = createStackNavigator(
+const ReportsStack = createStackNavigator(
   {
-    ScanScreen: {
-      screen: ScanScreen,
+    ReportsScreen: {
+      screen: ReportsScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'Scan',
+          headerTitle: 'Reports',
           headerLeft: (
             <Icon 
             style={{ paddingLeft: 10 }}
@@ -52,29 +42,9 @@ const ScanStack = createStackNavigator(
   }
 );
 
-const HistoryStack = createStackNavigator(
+const VicePresidentTabNavigator = createBottomTabNavigator(
   {
-    HistoryScreen: {
-      screen: HistoryScreen,
-      navigationOptions: ({ navigation }) => {
-        return {
-          headerTitle: 'History',
-          headerLeft: (
-            <Icon 
-            style={{ paddingLeft: 10 }}
-            onPress={() => navigation.openDrawer()}
-            name="md-menu" size={30} />
-          )
-        }
-      }
-    }
-  }
-);
-
-const StudentTabNavigator = createBottomTabNavigator(
-  {
-    Scan: ScanStack,
-    History: HistoryStack
+    Reports: ReportsStack
   }, {
     navigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state.routes[navigation.state.index];
@@ -86,9 +56,9 @@ const StudentTabNavigator = createBottomTabNavigator(
   }
 );
 
-const StudentStackNavigator = createStackNavigator(
+const VicePresidentStackNavigator = createStackNavigator(
   {
-    StudentTabNavigator: StudentTabNavigator
+    VicePresidentTabNavigator: VicePresidentTabNavigator
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
@@ -104,9 +74,9 @@ const StudentStackNavigator = createStackNavigator(
   }
 );
 
-export const StudentDrawerNavigator = createDrawerNavigator(
+export const VicePresidentDrawerNavigator = createDrawerNavigator(
   {
-    Dashboard: StudentStackNavigator,
+    Dashboard: VicePresidentStackNavigator,
     SigOut: { 
       screen: WelcomeScreen,
       navigationOptions: ({navigation}) => ({
@@ -114,7 +84,7 @@ export const StudentDrawerNavigator = createDrawerNavigator(
       })
     }
   }
-);
+)
 
 const styles = StyleSheet.create({
   container: {

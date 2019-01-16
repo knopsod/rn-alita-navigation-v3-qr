@@ -13,33 +13,33 @@ import {
 
 import WelcomeScreen from '../screens/WelcomeScreen';
 
-class ScanScreen extends React.Component {
+class ActivityScreen extends React.Component {
   render() {
     return (
       <View style={{...styles.container}}>
-        <Text>ScanScreen</Text>
+        <Text>ActivityScreen</Text>
       </View>
     );
   }
 }
 
-class HistoryScreen extends React.Component {
+class ReportingScreen extends React.Component {
   render() {
     return (
       <View style={{...styles.container}}>
-        <Text>HistoryScreen</Text>
+        <Text>ReportingScreen</Text>
       </View>
     );
   }
 }
 
-const ScanStack = createStackNavigator(
+const ActivityStack = createStackNavigator(
   {
-    ScanScreen: {
-      screen: ScanScreen,
+    ActivityScreen: {
+      screen: ActivityScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'Scan',
+          headerTitle: 'Activity',
           headerLeft: (
             <Icon 
             style={{ paddingLeft: 10 }}
@@ -52,13 +52,13 @@ const ScanStack = createStackNavigator(
   }
 );
 
-const HistoryStack = createStackNavigator(
+const ReportingStack = createStackNavigator(
   {
-    HistoryScreen: {
-      screen: HistoryScreen,
+    ReportingScreen: {
+      screen: ReportingScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'History',
+          headerTitle: 'Reporting',
           headerLeft: (
             <Icon 
             style={{ paddingLeft: 10 }}
@@ -71,10 +71,10 @@ const HistoryStack = createStackNavigator(
   }
 );
 
-const StudentTabNavigator = createBottomTabNavigator(
+const ClubTabNavigator = createBottomTabNavigator(
   {
-    Scan: ScanStack,
-    History: HistoryStack
+    Activity: ActivityStack,
+    Reporing: ReportingStack
   }, {
     navigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state.routes[navigation.state.index];
@@ -86,9 +86,9 @@ const StudentTabNavigator = createBottomTabNavigator(
   }
 );
 
-const StudentStackNavigator = createStackNavigator(
+const ClubStackNavigator = createStackNavigator(
   {
-    StudentTabNavigator: StudentTabNavigator
+    ClubTabNavigator: ClubTabNavigator
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
@@ -104,9 +104,9 @@ const StudentStackNavigator = createStackNavigator(
   }
 );
 
-export const StudentDrawerNavigator = createDrawerNavigator(
+export const ClubDrawerNavigator = createDrawerNavigator(
   {
-    Dashboard: StudentStackNavigator,
+    Dashboard: ClubStackNavigator,
     SigOut: { 
       screen: WelcomeScreen,
       navigationOptions: ({navigation}) => ({

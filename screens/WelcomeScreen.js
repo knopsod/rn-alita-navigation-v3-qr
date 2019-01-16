@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
 
-export default class WelcomeScreen extends React.Component {
+class WelcomeScreen extends React.Component {
   render() {
     return (
       <View style={{...styles.container}}>
@@ -23,6 +23,8 @@ export default class WelcomeScreen extends React.Component {
     );
   }
 }
+
+export default WelcomeScreen;
 
 const styles = StyleSheet.create({
   container: {
