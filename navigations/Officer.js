@@ -13,6 +13,7 @@ import {
 
 import WelcomeScreen from '../screens/WelcomeScreen';
 import UsersScreen from '../screens/officer/UsersScreen';
+import AddUserScreen from '../screens/officer/AddUserScreen';
 
 const UsersStack = createStackNavigator(
   {
@@ -27,6 +28,17 @@ const UsersStack = createStackNavigator(
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
           ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    AddUserScreen: {
+      screen: AddUserScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'Add User',
           headerStyle: {
             backgroundColor: 'orange'
           }

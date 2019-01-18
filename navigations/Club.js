@@ -14,6 +14,9 @@ import {
 import WelcomeScreen from '../screens/WelcomeScreen';
 import ActivityScreen from '../screens/club/ActivityScreen';
 import ReportingScreen from '../screens/club/ReportingScreen';
+import AddActivityScreen from '../screens/club/AddActivityScreen';
+import AddReportScreen from '../screens/club/AddReportDetail';
+
 
 const ActivityStack = createStackNavigator(
   {
@@ -28,6 +31,17 @@ const ActivityStack = createStackNavigator(
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
           ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    AddActivityScreen: {
+      screen: AddActivityScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'Add Activity',
           headerStyle: {
             backgroundColor: 'orange'
           }
@@ -50,6 +64,17 @@ const ReportingStack = createStackNavigator(
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
           ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    AddReportScreen: {
+      screen: AddReportScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'Add Report',
           headerStyle: {
             backgroundColor: 'orange'
           }

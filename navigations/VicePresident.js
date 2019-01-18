@@ -13,6 +13,7 @@ import {
 
 import WelcomeScreen from '../screens/WelcomeScreen';
 import ReportsScreen from '../screens/vicepresident/ReportsScreen';
+import ReportDetailScreen from '../screens/vicepresident/ReportDetailScreen';
 
 const ReportsStack = createStackNavigator(
   {
@@ -27,6 +28,17 @@ const ReportsStack = createStackNavigator(
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
           ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    ReportDetailScreen: {
+      screen: ReportDetailScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'Report detail',
           headerStyle: {
             backgroundColor: 'orange'
           }

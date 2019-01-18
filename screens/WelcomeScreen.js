@@ -2,14 +2,8 @@ import React from 'react'
 import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
 import {
   Container,
-  Header,
-  Title,
   Content,
   Button,
-  Icon,
-  Body,
-  Left,
-  Right,
   Item,
   Input,
   Form
