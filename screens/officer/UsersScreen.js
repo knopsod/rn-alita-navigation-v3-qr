@@ -4,6 +4,9 @@ import { Button } from "native-base";
 
 
 export default class UsersScreen extends React.Component {
+  componentWillMount() {
+    
+  }
   render() {
     return (
       <View style={{...styles.container}}>
