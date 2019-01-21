@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, FlatList } from 'react-native'
 import {
   Container,
   Content,
@@ -65,6 +65,16 @@ export default class UsersScreen extends React.Component {
             onPress={() => this.props.navigation.navigate('AddUserScreen')}>
             <Text style={{ color: '#fff' }}>สร้างใหม่</Text>
           </Button>
+          <FlatList data={this.state.users}
+            renderItem={
+              ({username}) => 
+              <View style={styles.listItemContainer}>
+                <Text style={styles.listItem}>
+                  {username}
+                </Text>
+              </View>
+            }
+            />
         </Content>
       </Container>
     );
@@ -74,5 +84,14 @@ export default class UsersScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "orange"
+  },
+  listItemContainer: {
+    backgroundColor: '#fff',
+    margin: 5,
+    borderRadius: 5
+  },
+  listItem: {
+    fontSize: 20,
+    padding: 10
   }
 });
