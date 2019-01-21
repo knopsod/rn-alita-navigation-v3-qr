@@ -20,48 +20,22 @@ export default class AddUserScreen extends React.Component {
       confirmPassword: '',
       studentId: '',
       firstName: '',
-      lastName: '',
-      message: '',
-      messages: []
-    }
-  }
-  componentDidMount() {
-    firebase
-      .database()
-      .ref()
-      .child("messages")
-      .once("value", snapshot => {
-        const data = snapshot.val()
-        if (snapshot.val()) {
-          const initMessages = [];
-          Object
-            .keys(data)
-            .forEach(message => initMessages.push(data[message]));
-          this.setState({
-            messages: initMessages
-          })
-        }
-      });
-
-    firebase
-      .database()
-      .ref()
-      .child("messages")
-      .on("child_added", snapshot => {
-        const data = snapshot.val();
-        if (data) {
-          this.setState(prevState => ({
-            messages: [data, ...prevState.messages]
-          }))
-        }
-      })
-
+      lastName: ''
+    };
   }
   onPress = () => {
-    const newMessage = firebase.database().ref()
-                          .child("messages")
-                          .push();
-    newMessage.set('hahaha', () => this.setState({message: ''}))
+    // https://medium.com/mindorks/firebase-realtime-database-with-react-native-5f357c6ee13b
+    firebase.database().ref('Users').push(this.state)
+      .then((data) => {
+        this.setState({
+          username: '',
+          password: '',
+          confirmPassword: '',
+          studentId: '',
+          firstName: '',
+          lastName: ''
+        })
+      })
   }
   render() {
     return (
@@ -99,7 +73,7 @@ export default class AddUserScreen extends React.Component {
                 onChangeText={val => this.setState({ lastName: val })} />
             </Item>
           </Form>
-          <Button block style={{ margin: 15, marginTop: 50 }}
+          <Button block style={{ margin: 15, marginTop: 20 }}
             onPress={() => this.onPress()}>
             <Text style={{ color: '#fff' }}>สร้างใหม่</Text>
           </Button>
