@@ -7,7 +7,7 @@ export default class ActivityScreen extends Component {
     return (
       <View style={{...styles.container}}>
         <Text> ActivityScreen </Text>
-        <Button block style={{ margin: 15, marginTop: 50 }}
+        <Button block style={{ margin: 5, marginTop: 50 }}
           onPress={() => this.props.navigation.navigate('AddActivityScreen')}>
           <Text style={{ color: '#fff' }}>Add Activity</Text>
         </Button>

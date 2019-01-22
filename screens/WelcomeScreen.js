@@ -22,19 +22,19 @@ class WelcomeScreen extends React.Component {
               <Input placeholder="Password" secureTextEntry />
             </Item>
           </Form>
-          <Button block style={{ margin: 15, marginTop: 50 }}
+          <Button block style={{ margin: 5, marginTop: 50 }}
             onPress={() => this.props.navigation.navigate('StudentRole')}>
             <Text style={{ color: '#fff' }}>Sign In as นักศึกษา</Text>
           </Button>
-          <Button block style={{ margin: 15 }}
+          <Button block style={{ margin: 5 }}
             onPress={() => this.props.navigation.navigate('ClubRole')}>
             <Text style={{ color: '#fff' }}>Sign In as สโมสร</Text>
           </Button>
-          <Button block style={{ margin: 15 }}
+          <Button block style={{ margin: 5 }}
             onPress={() => this.props.navigation.navigate('OfficerRole')}>
             <Text style={{ color: '#fff' }}>Sign In as เจ้าหน้าที่</Text>
           </Button>
-          <Button block style={{ margin: 15 }}
+          <Button block style={{ margin: 5 }}
             onPress={() => this.props.navigation.navigate('VicePresidentRole')}>
             <Text style={{ color: '#fff' }}>Sign In as รองคณบดี</Text>
           </Button>

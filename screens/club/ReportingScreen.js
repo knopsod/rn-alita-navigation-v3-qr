@@ -7,7 +7,7 @@ export default class ReportingScreen extends Component {
     return (
       <View style={{...styles.container}}>
         <Text> ReportingScreen </Text>
-        <Button block style={{ margin: 15, marginTop: 50 }}
+        <Button block style={{ margin: 5, marginTop: 50 }}
           onPress={() => this.props.navigation.navigate('AddReportScreen')}>
           <Text style={{ color: '#fff' }}>Add Report</Text>
         </Button>

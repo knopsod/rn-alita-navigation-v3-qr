@@ -51,28 +51,30 @@ export default class UsersScreen extends React.Component {
           }))
         }
       });
-
-    setTimeout(() => {
-      console.log(this.state);
-    }, 2000);
   }
+
+  _keyExtractor = (item, index) => index.toString();
   
   render() {
+    const { users } = this.state;
+
     return (
       <Container style={styles.container}>
         <Content>
-          <Button block style={{ margin: 15, marginTop: 20 }}
+          <Button block style={{ margin: 5, marginTop: 20 }}
             onPress={() => this.props.navigation.navigate('AddUserScreen')}>
             <Text style={{ color: '#fff' }}>สร้างใหม่</Text>
           </Button>
-          <FlatList data={this.state.users}
+          <FlatList data={users}
+            keyExtractor={this._keyExtractor}
             renderItem={
-              ({username}) => 
-              <View style={styles.listItemContainer}>
-                <Text style={styles.listItem}>
-                  {username}
-                </Text>
-              </View>
+              ({item, index}) => {
+                return <View style={styles.listItemContainer}>
+                  <Text style={styles.listItem}>
+                    {item.username}
+                  </Text>
+                </View>
+              }
             }
             />
         </Content>
@@ -85,13 +87,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "orange"
   },
-  listItemContainer: {
+    listItemContainer: {
     backgroundColor: '#fff',
     margin: 5,
     borderRadius: 5
   },
   listItem: {
     fontSize: 20,
-    padding: 10
+    padding: 10,
   }
 });

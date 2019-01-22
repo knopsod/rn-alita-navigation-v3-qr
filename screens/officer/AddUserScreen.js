@@ -24,6 +24,26 @@ export default class AddUserScreen extends React.Component {
     };
   }
   onPress = () => {
+    const { 
+      username, 
+      password, 
+      confirmPassword, 
+      studentId, 
+      firstName, 
+      lastName 
+    } = this.state;
+
+    if ( username === '' ||
+      password === '' ||
+      confirmPassword === '' ||
+      studentId === '' ||
+      firstName === '' ||
+      lastName === '' ) 
+    {
+      alert('Please complete data.');
+      return;  
+    }
+
     // https://medium.com/mindorks/firebase-realtime-database-with-react-native-5f357c6ee13b
     firebase.database().ref('Users').push(this.state)
       .then((data) => {
@@ -34,7 +54,9 @@ export default class AddUserScreen extends React.Component {
           studentId: '',
           firstName: '',
           lastName: ''
-        })
+        });
+
+        this.props.navigation.goBack();
       })
   }
   render() {
@@ -73,7 +95,7 @@ export default class AddUserScreen extends React.Component {
                 onChangeText={val => this.setState({ lastName: val })} />
             </Item>
           </Form>
-          <Button block style={{ margin: 15, marginTop: 20 }}
+          <Button block style={{ margin: 5, marginTop: 20 }}
             onPress={() => this.onPress()}>
             <Text style={{ color: '#fff' }}>สร้างใหม่</Text>
           </Button>

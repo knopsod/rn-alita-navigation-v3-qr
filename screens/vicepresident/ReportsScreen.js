@@ -7,7 +7,7 @@ export default class ReportsScreen extends React.Component {
     return (
       <View style={{...styles.container}}>
         <Text>ReportsScreen</Text>
-        <Button block style={{ margin: 15, marginTop: 50 }}
+        <Button block style={{ margin: 5, marginTop: 50 }}
           onPress={() => this.props.navigation.navigate('ReportDetailScreen')}>
           <Text style={{ color: '#fff' }}>Go to Report detail</Text>
         </Button>
