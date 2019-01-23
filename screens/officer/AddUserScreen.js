@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
+import React from 'react'
+import { Text, StyleSheet } from 'react-native'
 import {
   Container,
   Content,
@@ -14,13 +14,14 @@ import firebase from '../../Firebase'
 export default class AddUserScreen extends React.Component {
   constructor(props) {
     super(props);
+    const { navigation } = props;
     this.state = {
-      username: '',
-      password: '',
-      confirmPassword: '',
-      studentId: '',
-      firstName: '',
-      lastName: ''
+      username: navigation.getParam('username', ''),
+      password:  navigation.getParam('password', ''),
+      confirmPassword:  navigation.getParam('comfirmPassword', ''),
+      studentId:  navigation.getParam('studentId', ''),
+      firstName:  navigation.getParam('firstName', ''),
+      lastName:  navigation.getParam('lastName', '')
     };
   }
   onPress = () => {
@@ -40,7 +41,19 @@ export default class AddUserScreen extends React.Component {
       firstName === '' ||
       lastName === '' ) 
     {
-      alert('Please complete data.');
+      alert('กรุณาใส่ข้อมูลให้ครบ');
+      return;  
+    }
+
+    if ( username != '' &&
+      password != '' &&
+      confirmPassword != '' &&
+      studentId != '' &&
+      firstName != '' &&
+      lastName != '' &&
+      password != confirmPassword ) 
+    {
+      alert('ยืนยันรหัสผ่านไม่ถูกต้อง');
       return;  
     }
 

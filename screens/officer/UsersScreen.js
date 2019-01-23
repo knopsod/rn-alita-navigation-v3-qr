@@ -1,15 +1,16 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet, FlatList } from 'react-native'
+import React from 'react'
+import { Text, StyleSheet } from 'react-native'
 import {
   Container,
   Content,
   Button,
-  Item,
-  Input,
-  Form
+  List,
+  ListItem,
+  Left,
+  Right,
+  Icon
 } from "native-base";
 import firebase from '../../Firebase'
-
 
 export default class UsersScreen extends React.Component {
   constructor(props) {
@@ -20,23 +21,6 @@ export default class UsersScreen extends React.Component {
     }
   }
   componentDidMount() {
-    // https://medium.com/mindorks/firebase-realtime-database-with-react-native-5f357c6ee13b
-    // firebase.database().ref('Users/').on('value', function(snapshot) {
-      // https://stackoverflow.com/questions/47009264/rendering-data-in-flatlist-from-firebase
-      // console.log(snapshot.val());
-      // console.log(Object.entries(snapshot.val()).map(item => ({ ...item[1], key: item[0]})));
-      // const data = snapshot.val();
-      
-      // if(data) {
-      //   const users = Object.entries(data).map(item => ({ ...item[1], key: item[0]}));
-      //   console.log(users);
-
-      //     this.setState(prevState => ({
-        //       users: [users, ...prevState.users]
-        //     }))
-        //   }
-        // });
-    
     // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
     // https://github.com/rayn-studios-learning/message-board-app/blob/master/App.js
     firebase
@@ -52,8 +36,6 @@ export default class UsersScreen extends React.Component {
         }
       });
   }
-
-  _keyExtractor = (item, index) => index.toString();
   
   render() {
     const { users } = this.state;
@@ -65,18 +47,25 @@ export default class UsersScreen extends React.Component {
             onPress={() => this.props.navigation.navigate('AddUserScreen')}>
             <Text style={{ color: '#fff' }}>สร้างใหม่</Text>
           </Button>
-          <FlatList data={users}
-            keyExtractor={this._keyExtractor}
-            renderItem={
-              ({item, index}) => {
-                return <View style={styles.listItemContainer}>
-                  <Text style={styles.listItem}>
-                    {item.username}
+          <List
+            dataArray={users}
+            renderRow={data => {
+              console.log(data);
+              return <ListItem
+                button
+                onPress={() => this.props.navigation.navigate('AddUserScreen', data)}
+              >
+                <Left>
+                  <Text>
+                    {data.username}
                   </Text>
-                </View>
-              }
+                </Left>
+                <Right>
+                  <Icon name="arrow-forward" />
+                </Right>
+              </ListItem>}
             }
-            />
+          />
         </Content>
       </Container>
     );
