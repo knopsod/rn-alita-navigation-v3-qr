@@ -10,6 +10,7 @@ import {
   Right,
   Icon
 } from "native-base";
+
 import firebase from '../../Firebase'
 
 export default class UsersScreen extends React.Component {
