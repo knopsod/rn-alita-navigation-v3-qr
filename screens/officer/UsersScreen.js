@@ -35,6 +35,20 @@ export default class UsersScreen extends React.Component {
           }))
         }
       });
+    
+    // Can't update this.state.users
+    // firebase
+    //   .database()
+    //   .ref()
+    //   .child('Users')
+    //   .on('child_changed', snapshot => {
+    //     const { _key } = snapshot.val();
+    //     let { users } = this.state;
+    //     let foundIndex = users.findIndex(element => element._key === _key);
+    //     users.splice(foundIndex, 0, snapshot.val());
+    //     this.setState({...users});
+    //     console.log(users);
+    //   });
   }
   
   render() {
@@ -50,7 +64,6 @@ export default class UsersScreen extends React.Component {
           <List
             dataArray={users}
             renderRow={data => {
-              console.log(data);
               return <ListItem
                 button
                 onPress={() => this.props.navigation.navigate('AddUserScreen', data)}

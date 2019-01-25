@@ -16,9 +16,10 @@ export default class AddUserScreen extends React.Component {
     super(props);
     const { navigation } = props;
     this.state = {
+      _key: navigation.getParam('_key', ''),
       username: navigation.getParam('username', ''),
       password:  navigation.getParam('password', ''),
-      confirmPassword:  navigation.getParam('comfirmPassword', ''),
+      confirmPassword:  navigation.getParam('confirmPassword', ''),
       studentId:  navigation.getParam('studentId', ''),
       firstName:  navigation.getParam('firstName', ''),
       lastName:  navigation.getParam('lastName', '')
@@ -58,8 +59,25 @@ export default class AddUserScreen extends React.Component {
     }
 
     // https://medium.com/mindorks/firebase-realtime-database-with-react-native-5f357c6ee13b
-    firebase.database().ref('Users').push(this.state)
-      .then((data) => {
+    // firebase.database().ref('Users').push(this.state)
+    //   .then((data) => {
+    //     this.setState({
+    //       username: '',
+    //       password: '',
+    //       confirmPassword: '',
+    //       studentId: '',
+    //       firstName: '',
+    //       lastName: ''
+    //     });
+
+    //     this.props.navigation.goBack();
+    //   });
+
+    // https://www.youtube.com/watch?v=BWIN4JBm0-k&list=PLy9JCsy2u97m-xWAxGwHZ2vITtj4qBKDm&index=6
+    // https://github.com/nathvarun/React-Native-Firebase-Tutorials/blob/master/Project%20Files/4%265%20Swipeable%20Lists/Complete/App.js
+    var key = this.state._key ? this.state._key : firebase.database().ref('Users').push().key;
+    var set = firebase.database().ref('Users').child(key).set({ ...this.state, _key: key });
+    set.then((data) => {
         this.setState({
           username: '',
           password: '',
@@ -70,7 +88,7 @@ export default class AddUserScreen extends React.Component {
         });
 
         this.props.navigation.goBack();
-      })
+    });
   }
   render() {
     return (
@@ -110,7 +128,7 @@ export default class AddUserScreen extends React.Component {
           </Form>
           <Button block style={{ margin: 5, marginTop: 20 }}
             onPress={() => this.onPress()}>
-            <Text style={{ color: '#fff' }}>สร้างใหม่</Text>
+            <Text style={{ color: '#fff' }}>{ this.state._key ? 'บันทึก' : 'สร้างใหม่'}</Text>
           </Button>
         </Content>
       </Container>
