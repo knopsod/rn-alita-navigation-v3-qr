@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import Icon from '@expo/vector-icons/Ionicons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { 
   createAppContainer, 
@@ -75,15 +75,18 @@ const StudentTabNavigator = createBottomTabNavigator(
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
-        let IconComponent = Ionicons;
+        // let IconComponent = Ionicons;
+        let IconComponent = Icon;
         let iconName;
         if (routeName === 'Scan') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+          // iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+          iconName = `md-barcode`;
           // Sometimes we want to add badges to some icons. 
           // You can check the implementation below.
           // IconComponent = HomeIconWithBadge; 
         } else if (routeName === 'History') {
-          iconName = `ios-options${focused ? '' : '-outline'}`;
+          // iconName = `ios-options${focused ? '' : '-outline'}`;
+          iconName = `md-paper`;
         }
 
         // You can return any component that you like here!

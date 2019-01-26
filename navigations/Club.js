@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import Icon from '@expo/vector-icons/Ionicons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { 
   createAppContainer, 
@@ -100,15 +100,18 @@ const ClubTabNavigator = createBottomTabNavigator(
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
-        let IconComponent = Ionicons;
+        // let IconComponent = Ionicons;
+        let IconComponent = Icon;
         let iconName;
         if (routeName === 'Activity') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+          // iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+          iconName = `md-bicycle`;
           // Sometimes we want to add badges to some icons. 
           // You can check the implementation below.
           // IconComponent = HomeIconWithBadge; 
         } else if (routeName === 'Reporting') {
-          iconName = `ios-options${focused ? '' : '-outline'}`;
+          // iconName = `ios-options${focused ? '' : '-outline'}`;
+          iconName = `md-clipboard`;
         }
 
         // You can return any component that you like here!
