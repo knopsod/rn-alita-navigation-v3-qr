@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import {
   Container,
   Content,
@@ -10,34 +10,58 @@ import {
 } from "native-base";
 
 class WelcomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: '',
+      password: ''
+    }
+  }
+  onPress = () => {
+    const { navigation } = this.props;
+    const { username } = this.state;
+
+    switch (username.toLowerCase()) {
+      case 's':
+        navigation.navigate('StudentRole')    
+        break;
+      
+      case 'c':
+        navigation.navigate('ClubRole')    
+        break;
+
+      
+      case 'o':
+        navigation.navigate('OfficerRole')    
+        break;
+    
+      case 'v':
+        navigation.navigate('VicePresidentRole')    
+        break;
+    
+      default:
+        break;
+    }
+  }
   render() {
     return (
       <Container style={styles.container}>
         <Content>
           <Form style={{ marginTop: 200 }}>
             <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Username" />
+              <Input placeholder="Username"
+                onChangeText={text => this.setState({ username: text })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Password" secureTextEntry />
+              <Input placeholder="Password" secureTextEntry
+                onChangeText={text => this.setState({ password: text })} />
             </Item>
+            <Button block style={{ margin: 5, marginTop: 30 }}
+              onPress={() => this.onPress()}>
+              <Text style={{ color: '#fff' }}>Sign-in</Text>
+            </Button>
           </Form>
-          <Button block style={{ margin: 5, marginTop: 50 }}
-            onPress={() => this.props.navigation.navigate('StudentRole')}>
-            <Text style={{ color: '#fff' }}>Sign In as นักศึกษา</Text>
-          </Button>
-          <Button block style={{ margin: 5 }}
-            onPress={() => this.props.navigation.navigate('ClubRole')}>
-            <Text style={{ color: '#fff' }}>Sign In as สโมสร</Text>
-          </Button>
-          <Button block style={{ margin: 5 }}
-            onPress={() => this.props.navigation.navigate('OfficerRole')}>
-            <Text style={{ color: '#fff' }}>Sign In as เจ้าหน้าที่</Text>
-          </Button>
-          <Button block style={{ margin: 5 }}
-            onPress={() => this.props.navigation.navigate('VicePresidentRole')}>
-            <Text style={{ color: '#fff' }}>Sign In as รองคณบดี</Text>
-          </Button>
         </Content>
       </Container>
     );
