@@ -20,22 +20,30 @@ export default class ActivityScreen extends Component {
     this.state = {
       activities: []
     }
+
+    this.child = firebase.database().ref().child('Activities');
   }
   componentDidMount() {
     // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
     // https://github.com/rayn-studios-learning/message-board-app/blob/master/App.js
-    firebase
-      .database()
-      .ref()
-      .child('Activities')
-      .on('child_added', snapshot => {
-        const data = snapshot.val();
-        if (data) {
-          this.setState(prevState => ({
-            activities: [data, ...prevState.activities]
-          }))
-        }
+    this.child.on('child_added', snapshot => {
+      const data = snapshot.val();
+      if (data) {
+        this.setState(prevState => ({
+          activities: [data, ...prevState.activities]
+        }))
+      }
+    });
+
+    this.child.on('child_changed', snapshot => {
+      const changedActivity = Object.assign({}, snapshot.val());
+      const { activities } = this.state;
+      const filledActivities = activities.filter(element => element._key !== changedActivity._key);
+      filledActivities.unshift(changedActivity);
+      this.setState({
+        activities: filledActivities
       });
+    });
   }
   render() {
     const { activities } = this.state;

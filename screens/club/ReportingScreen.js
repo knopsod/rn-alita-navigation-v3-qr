@@ -20,22 +20,30 @@ export default class ReportingScreen extends Component {
     this.state = {
       reports: []
     }
+
+    this.child = firebase.database().ref().child('Reportings');
   }
   componentDidMount() {
     // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
     // https://github.com/rayn-studios-learning/message-board-app/blob/master/App.js
-    firebase
-      .database()
-      .ref()
-      .child('Reportings')
-      .on('child_added', snapshot => {
-        const data = snapshot.val();
-        if (data) {
-          this.setState(prevState => ({
-            reports: [data, ...prevState.reports]
-          }))
-        }
+    this.child.on('child_added', snapshot => {
+      const data = snapshot.val();
+      if (data) {
+        this.setState(prevState => ({
+          reports: [data, ...prevState.reports]
+        }))
+      }
+    });
+
+    this.child.on('child_changed', snapshot => {
+      const changedReport = Object.assign({}, snapshot.val());
+      const { reports } = this.state;
+      const filledReports = reports.filter(element => element._key !== changedReport._key);
+      filledReports.unshift(changedReport);
+      this.setState({ 
+        reports: filledReports
       });
+    });
   }
   render() {
     const { reports } = this.state;

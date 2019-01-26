@@ -20,36 +20,30 @@ export default class UsersScreen extends React.Component {
     this.state = {
       users: []
     }
+
+    this.child = firebase.database().ref().child('Users');
   }
   componentDidMount() {
     // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
     // https://github.com/rayn-studios-learning/message-board-app/blob/master/App.js
-    firebase
-      .database()
-      .ref()
-      .child('Users')
-      .on('child_added', snapshot => {
-        const data = snapshot.val();
-        if (data) {
-          this.setState(prevState => ({
-            users: [data, ...prevState.users]
-          }))
-        }
-      });
+    this.child.on('child_added', snapshot => {
+      const data = snapshot.val();
+      if (data) {
+        this.setState(prevState => ({
+          users: [data, ...prevState.users]
+        }))
+      }
+    });
     
-    // Can't update this.state.users
-    // firebase
-    //   .database()
-    //   .ref()
-    //   .child('Users')
-    //   .on('child_changed', snapshot => {
-    //     const { _key } = snapshot.val();
-    //     let { users } = this.state;
-    //     let foundIndex = users.findIndex(element => element._key === _key);
-    //     users.splice(foundIndex, 0, snapshot.val());
-    //     this.setState({...users});
-    //     console.log(users);
-    //   });
+    this.child.on('child_changed', snapshot => {
+      const changedUser = Object.assign({}, snapshot.val());
+      const { users } = this.state;
+      const filledUsers = users.filter(element => element._key !== changedUser._key);
+      filledUsers.unshift(changedUser);
+      this.setState({ 
+        users: filledUsers
+      });
+    });
   }
   
   render() {
@@ -67,7 +61,9 @@ export default class UsersScreen extends React.Component {
             renderRow={data => {
               return <ListItem
                 button
-                onPress={() => this.props.navigation.navigate('AddUserScreen', data)}
+                onPress={() => {
+                  this.props.navigation.navigate('AddUserScreen', data)
+                }}
               >
                 <Left>
                   <Text>
