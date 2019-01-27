@@ -12,8 +12,15 @@ import {
 } from 'react-navigation';
 
 import WelcomeScreen from '../screens/WelcomeScreen';
+
 import UsersScreen from '../screens/officer/UsersScreen';
 import AddUserScreen from '../screens/officer/AddUserScreen';
+
+import OfficersScreen from '../screens/officer/OfficersScreen';
+import AddOfficerScreen from '../screens/officer/AddOfficerScreen';
+
+import VicePresidentsScreen from '../screens/officer/VicePresidentsScreen';
+import AddVicePresidentScreen from '../screens/officer/AddVicePresidentScreen';
 
 const UsersStack = createStackNavigator(
   {
@@ -21,12 +28,12 @@ const UsersStack = createStackNavigator(
       screen: UsersScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'Users',
+          headerTitle: 'นักศึกษา',
           headerLeft: (
             <Icon 
-            style={{ paddingLeft: 10 }}
-            onPress={() => navigation.openDrawer()}
-            name="md-menu" size={30} />
+              style={{ paddingLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+              name="md-menu" size={30} />
           ),
           headerStyle: {
             backgroundColor: 'orange'
@@ -38,7 +45,73 @@ const UsersStack = createStackNavigator(
       screen: AddUserScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'Add User',
+          headerTitle: 'นักศึกษา',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    }
+  }
+);
+
+const OfficersStack = createStackNavigator(
+  {
+    OfficersScreen: {
+      screen: OfficersScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'เจ้าหน้าที่',
+          headerLeft: (
+            <Icon 
+              style={{ paddingLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+              name="md-menu" size={30} />
+          ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    AddOfficerScreen: {
+      screen: AddOfficerScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'เจ้าหน้าที่',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    }
+  }
+);
+
+const VicePresidentsStack = createStackNavigator(
+  {
+    VicePresidentsScreen: {
+      screen: VicePresidentsScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'รองคณบดี',
+          headerLeft: (
+            <Icon 
+              style={{ paddingLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+              name="md-menu" size={30} />
+          ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    AddVicePresidentScreen: {
+      screen: AddVicePresidentScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'รองคณบดี',
           headerStyle: {
             backgroundColor: 'orange'
           }
@@ -53,8 +126,20 @@ const UsersTabNavigator = createBottomTabNavigator(
     Users: {
       screen: UsersStack,
       navigationOptions: {
-        tabBarVisible: false
-      }  
+        title: 'นักศึกษา'
+      }
+    },
+    Officers: {
+      screen: OfficersStack,
+      navigationOptions: {
+        title: 'เจ้าหน้าที่'
+      }
+    },
+    VicePresidents: {
+      screen: VicePresidentsStack,
+      navigationOptions: {
+        title: 'รองคณบดี'
+      }
     }
   }, {
     navigationOptions: ({ navigation }) => {
@@ -63,6 +148,39 @@ const UsersTabNavigator = createBottomTabNavigator(
         header: null,
         headerTitle: routeName
       }
+    },
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        // let IconComponent = Ionicons;
+        let IconComponent = Icon;
+        let iconName;
+        if (routeName === 'Users') {
+          // iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+          iconName = `md-body`;
+          // Sometimes we want to add badges to some icons. 
+          // You can check the implementation below.
+          // IconComponent = HomeIconWithBadge; 
+        } else if (routeName === 'Officers') {
+          // iconName = `ios-options${focused ? '' : '-outline'}`;
+          iconName = `md-key`;
+        } else if (routeName === 'VicePresidents') {
+          // iconName = `ios-options${focused ? '' : '-outline'}`;
+          iconName = `md-person`;
+        }
+
+        // You can return any component that you like here!
+        return <IconComponent name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: 'white',
+      labelStyle: {
+        fontSize: 12,
+      },
+      style: {
+        backgroundColor: 'orange',
+      },
     }
   }
 );

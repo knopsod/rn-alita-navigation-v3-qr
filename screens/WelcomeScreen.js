@@ -6,7 +6,8 @@ import {
   Button,
   Item,
   Input,
-  Form
+  Form,
+  Thumbnail,
 } from "native-base";
 
 class WelcomeScreen extends React.Component {
@@ -47,8 +48,11 @@ class WelcomeScreen extends React.Component {
   render() {
     return (
       <Container style={styles.container}>
-        <Content>
-          <Form style={{ marginTop: 200 }}>
+        <Content style={{ marginTop: 150 }}>
+          <Form>
+            <Form style={{ marginLeft: 135 }}>
+              <Thumbnail large source={require('../assets/ict.jpg')}/>
+            </Form>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="Username"
                 onChangeText={text => this.setState({ username: text })} />
