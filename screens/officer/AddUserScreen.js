@@ -17,44 +17,38 @@ export default class AddUserScreen extends React.Component {
     const { navigation } = props;
     this.state = {
       _key: navigation.getParam('_key', ''),
-      username: navigation.getParam('username', ''),
-      password:  navigation.getParam('password', ''),
-      confirmPassword:  navigation.getParam('confirmPassword', ''),
-      studentId:  navigation.getParam('studentId', ''),
-      firstName:  navigation.getParam('firstName', ''),
-      lastName:  navigation.getParam('lastName', '')
+      studentId: navigation.getParam('studentId', ''),
+      idCardNo: navigation.getParam('idCardNo', ''),
+      prefix: navigation.getParam('prefix', ''),
+      firstName: navigation.getParam('firstName', ''),
+      lastName: navigation.getParam('lastName', ''),
+      faculty: navigation.getParam('faculty', ''),
+      status: navigation.getParam('status', ''),
+      phoneNo: navigation.getParam('phoneNo', ''),
     };
   }
   onPress = () => {
     const { 
-      username, 
-      password, 
-      confirmPassword, 
       studentId, 
+      idCardNo,
+      prefix,
       firstName, 
-      lastName 
+      lastName,
+      faculty,
+      status,
+      phoneNo,
     } = this.state;
 
-    if ( username === '' ||
-      password === '' ||
-      confirmPassword === '' ||
-      studentId === '' ||
+    if ( studentId === '' ||
+      idCardNo === '' ||
+      prefix === '' ||
       firstName === '' ||
-      lastName === '' ) 
+      lastName === '' ||
+      faculty === '' ||
+      status === '' ||
+      phoneNo === '' ) 
     {
       alert('กรุณาใส่ข้อมูลให้ครบ');
-      return;  
-    }
-
-    if ( username != '' &&
-      password != '' &&
-      confirmPassword != '' &&
-      studentId != '' &&
-      firstName != '' &&
-      lastName != '' &&
-      password != confirmPassword ) 
-    {
-      alert('ยืนยันรหัสผ่านไม่ถูกต้อง');
       return;  
     }
 
@@ -79,12 +73,14 @@ export default class AddUserScreen extends React.Component {
     var set = firebase.database().ref('Users').child(key).set({ ...this.state, _key: key });
     set.then((data) => {
         this.setState({
-          username: '',
-          password: '',
-          confirmPassword: '',
           studentId: '',
+          idCardNo: '',
+          prefix: '',
           firstName: '',
-          lastName: ''
+          lastName: '',
+          faculty: '',
+          status: '',
+          phoneNo: '',
         });
 
         this.props.navigation.goBack();
@@ -96,39 +92,47 @@ export default class AddUserScreen extends React.Component {
         <Content>
           <Form style={{ marginTop: 20 }}>
             <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Username" name="username"
-                value={this.state.username}
-                onChangeText={val => this.setState({ username: val })} />
-            </Item>
-            <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Password" secureTextEntry name="password"
-                value={this.state.password}
-                onChangeText={val => this.setState({ password: val })} />
-            </Item>
-            <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Confirm Password" secureTextEntry name="confirmPassword"
-                value={this.state.confirmPassword}
-                onChangeText={val => this.setState({ confirmPassword: val })} />
-            </Item>
-            <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Student ID" name="studentId"
+              <Input placeholder="รหัสนักศึกษา" name="studentId"
                 value={this.state.studentId}
                 onChangeText={val => this.setState({ studentId: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
-              <Input placeholder="First Name" name="firstName"
+              <Input placeholder="เลขบัตรประชาชน" name="idCardNo"
+                value={this.state.idCardNo}
+                onChangeText={val => this.setState({ idCardNo: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="คำนำหน้าชื่อ" name="prefix"
+                value={this.state.prefix}
+                onChangeText={val => this.setState({ prefix: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="ชื่อ" name="firstName"
                 value={this.state.firstName}
                 onChangeText={val => this.setState({ firstName: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Last Name" name="lastname"
+              <Input placeholder="นามสกุล" name="lastname"
                 value={this.state.lastName}
                 onChangeText={val => this.setState({ lastName: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="สาขาวิชา" name="faculty"
+                value={this.state.faculty}
+                onChangeText={val => this.setState({ faculty: val })} />
+            </Item><Item style={{ marginRight: 15 }}>
+              <Input placeholder="สถานะ" name="status"
+                value={this.state.status}
+                onChangeText={val => this.setState({ status: val })} />
+            </Item><Item style={{ marginRight: 15 }}>
+              <Input placeholder="เบอร์โทรศัพท์" name="phoneNo"
+                value={this.state.phoneNo}
+                onChangeText={val => this.setState({ phoneNo: val })} />
             </Item>
           </Form>
           <Button block style={{ margin: 5, marginTop: 20 }}
             onPress={() => this.onPress()}>
-            <Text style={{ color: '#fff' }}>{ this.state._key ? 'บันทึก s' : 'สร้างใหม่ s'}</Text>
+            <Text style={{ color: '#fff' }}>{ this.state._key ? 'บันทึก' : 'สร้างใหม่'}</Text>
           </Button>
         </Content>
       </Container>

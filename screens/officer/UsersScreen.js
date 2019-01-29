@@ -48,6 +48,10 @@ export default class UsersScreen extends React.Component {
   
   render() {
     const { users } = this.state;
+    const students = users.filter(
+      element => element.status && 
+        ( element.status.toLowerCase() === 's' || element.status.toLowerCase() === 'c' )
+    );
 
     return (
       <Container style={styles.container}>
@@ -57,7 +61,7 @@ export default class UsersScreen extends React.Component {
             <Text style={{ color: '#fff' }}>สร้างใหม่</Text>
           </Button>
           <List
-            dataArray={users}
+            dataArray={students}
             renderRow={data => {
               return <ListItem
                 button
@@ -67,7 +71,7 @@ export default class UsersScreen extends React.Component {
               >
                 <Left>
                   <Text>
-                    {data.username}
+                    {data.studentId}
                   </Text>
                 </Left>
                 <Right>
