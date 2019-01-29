@@ -70,6 +70,7 @@ export default class AddVicePresidentScreen extends React.Component {
           <Form style={{ marginTop: 20 }}>
           <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสรองคณบดี" name="studentId"
+                keyboardType="numeric"
                 value={this.state.studentId}
                 onChangeText={val => this.setState({ studentId: val })} />
             </Item>
@@ -86,6 +87,7 @@ export default class AddVicePresidentScreen extends React.Component {
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="เบอร์โทรศัพท์" name="phoneNo"
                 value={this.state.phoneNo}
+                keyboardType="phone-pad"
                 onChangeText={val => this.setState({ phoneNo: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
@@ -96,7 +98,7 @@ export default class AddVicePresidentScreen extends React.Component {
           </Form>
           <Button block style={{ margin: 5, marginTop: 20 }}
             onPress={() => this.onPress()}>
-            <Text style={{ color: '#fff' }}>{ this.state._key ? 'บันทึก v' : 'สร้างใหม่ v'}</Text>
+            <Text style={{ color: '#fff' }}>{ this.state._key ? 'บันทึก' : 'สร้างใหม่'}</Text>
           </Button>
         </Content>
       </Container>

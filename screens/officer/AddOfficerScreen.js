@@ -70,6 +70,7 @@ export default class AddOfficerScreen extends React.Component {
           <Form style={{ marginTop: 20 }}>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสเจ้าหน้าที่" name="studentId"
+                keyboardType="numeric"
                 value={this.state.studentId}
                 onChangeText={val => this.setState({ studentId: val })} />
             </Item>
@@ -85,6 +86,7 @@ export default class AddOfficerScreen extends React.Component {
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="เบอร์โทรศัพท์" name="phoneNo"
+                keyboardType="phone-pad"
                 value={this.state.phoneNo}
                 onChangeText={val => this.setState({ phoneNo: val })} />
             </Item>
@@ -96,7 +98,7 @@ export default class AddOfficerScreen extends React.Component {
           </Form>
           <Button block style={{ margin: 5, marginTop: 20 }}
             onPress={() => this.onPress()}>
-            <Text style={{ color: '#fff' }}>{ this.state._key ? 'บันทึก o' : 'สร้างใหม่ o'}</Text>
+            <Text style={{ color: '#fff' }}>{ this.state._key ? 'บันทึก' : 'สร้างใหม่'}</Text>
           </Button>
         </Content>
       </Container>

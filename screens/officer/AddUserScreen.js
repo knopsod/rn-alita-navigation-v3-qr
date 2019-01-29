@@ -93,11 +93,13 @@ export default class AddUserScreen extends React.Component {
           <Form style={{ marginTop: 20 }}>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสนักศึกษา" name="studentId"
+                keyboardType="numeric"
                 value={this.state.studentId}
                 onChangeText={val => this.setState({ studentId: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="เลขบัตรประชาชน" name="idCardNo"
+                keyboardType="numeric"
                 value={this.state.idCardNo}
                 onChangeText={val => this.setState({ idCardNo: val })} />
             </Item>
@@ -126,6 +128,7 @@ export default class AddUserScreen extends React.Component {
                 onChangeText={val => this.setState({ status: val })} />
             </Item><Item style={{ marginRight: 15 }}>
               <Input placeholder="เบอร์โทรศัพท์" name="phoneNo"
+                keyboardType="phone-pad"
                 value={this.state.phoneNo}
                 onChangeText={val => this.setState({ phoneNo: val })} />
             </Item>

@@ -49,7 +49,7 @@ class WelcomeScreen extends React.Component {
     const halfWidth = Dimensions.get('screen').width/2 - 40;
     return (
       <Container style={styles.container}>
-        <Content style={{ marginTop: 150 }}>
+        <Content style={{ marginTop: 140 }}>
           <Form>
             <Form style={{ marginLeft: halfWidth }}>
               <Thumbnail large source={require('../assets/ict.jpg')}/>
