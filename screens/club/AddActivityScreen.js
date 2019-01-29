@@ -23,7 +23,8 @@ export default class AddActivityScreen extends React.Component {
       characteristic: navigation.getParam('characteristic', ''),
       objective: navigation.getParam('objective', ''),
       location: navigation.getParam('location', ''),
-      period: navigation.getParam('period', '')
+      period: navigation.getParam('period', ''),
+      plan: navigation.getParam('plan', '')
     };
   }
   onPress = () => {
@@ -34,7 +35,8 @@ export default class AddActivityScreen extends React.Component {
       characteristic,
       objective,
       location,
-      period
+      period,
+      plan
     } = this.state;
 
     if ( id === '' ||
@@ -43,7 +45,8 @@ export default class AddActivityScreen extends React.Component {
       characteristic === '' ||
       objective === '' ||
       location === '' ||
-      period === '' 
+      period === '' ||
+      plan === ''
     ) 
     {
       alert('กรุณาใส่ข้อมูลให้ครบ');
@@ -62,7 +65,8 @@ export default class AddActivityScreen extends React.Component {
           characteristic: '',
           objective: '',
           location: '',
-          period: ''
+          period: '',
+          plan: ''
         });
 
         this.props.navigation.goBack();
@@ -77,7 +81,8 @@ export default class AddActivityScreen extends React.Component {
       characteristic,
       objective,
       location,
-      period
+      period,
+      plan
     } = this.state;
     return (
       <Container style={styles.container}>
@@ -117,6 +122,15 @@ export default class AddActivityScreen extends React.Component {
               <Input placeholder="ระยะเวลา" name="period"
                 value={period}
                 onChangeText={val => this.setState({ period: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="ผู้เข้าร่วมกิจกรรม" name="users"
+                />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="แผนการดำเนินการ" name="plan"
+                value={plan}
+                onChangeText={val => this.setState({ plan: val })} />
             </Item>
           </Form>
           <Button block style={{ margin: 5, marginTop: 20 }}
