@@ -48,6 +48,10 @@ export default class VicePresidentsScreen extends React.Component {
   
   render() {
     const { users } = this.state;
+    const vicePresidents = users.filter(
+      element => element.status && 
+        ( element.status.toLowerCase() === 'v' )
+    );
 
     return (
       <Container style={styles.container}>
@@ -57,7 +61,7 @@ export default class VicePresidentsScreen extends React.Component {
             <Text style={{ color: '#fff' }}>สร้างใหม่</Text>
           </Button>
           <List
-            dataArray={users}
+            dataArray={vicePresidents}
             renderRow={data => {
               return <ListItem
                 button
@@ -67,7 +71,7 @@ export default class VicePresidentsScreen extends React.Component {
               >
                 <Left>
                   <Text>
-                    {data.username}
+                    {data.studentId}
                   </Text>
                 </Left>
                 <Right>

@@ -17,59 +17,47 @@ export default class AddVicePresidentScreen extends React.Component {
     const { navigation } = props;
     this.state = {
       _key: navigation.getParam('_key', ''),
-      username: navigation.getParam('username', ''),
-      password:  navigation.getParam('password', ''),
-      confirmPassword:  navigation.getParam('confirmPassword', ''),
-      studentId:  navigation.getParam('studentId', ''),
-      firstName:  navigation.getParam('firstName', ''),
-      lastName:  navigation.getParam('lastName', '')
+      studentId: navigation.getParam('studentId', ''),
+      firstName: navigation.getParam('firstName', ''),
+      lastName: navigation.getParam('lastName', ''),
+      status: 'v',
+      phoneNo: navigation.getParam('phoneNo', ''),
+      position: navigation.getParam('position', ''),
     };
   }
   onPress = () => {
     const { 
-      username, 
-      password, 
-      confirmPassword, 
       studentId, 
       firstName, 
-      lastName 
+      lastName,
+      status,
+      phoneNo,
+      position,
     } = this.state;
 
-    if ( username === '' ||
-      password === '' ||
-      confirmPassword === '' ||
-      studentId === '' ||
+    if ( studentId === '' ||
       firstName === '' ||
-      lastName === '' ) 
+      lastName === '' ||
+      status === '' ||
+      phoneNo === '' ||
+      position === '' ) 
     {
       alert('กรุณาใส่ข้อมูลให้ครบ');
-      return;  
-    }
-
-    if ( username != '' &&
-      password != '' &&
-      confirmPassword != '' &&
-      studentId != '' &&
-      firstName != '' &&
-      lastName != '' &&
-      password != confirmPassword ) 
-    {
-      alert('ยืนยันรหัสผ่านไม่ถูกต้อง');
       return;  
     }
 
     // https://www.youtube.com/watch?v=BWIN4JBm0-k&list=PLy9JCsy2u97m-xWAxGwHZ2vITtj4qBKDm&index=6
     // https://github.com/nathvarun/React-Native-Firebase-Tutorials/blob/master/Project%20Files/4%265%20Swipeable%20Lists/Complete/App.js
     var key = this.state._key ? this.state._key : firebase.database().ref('Users').push().key;
-    var set = firebase.database().ref('Users').child(key).set({ ...this.state, _key: key });
+    var set = firebase.database().ref('Users').child(key).set({ ...this.state, _key: key, status: 'v' });
     set.then((data) => {
         this.setState({
-          username: '',
-          password: '',
-          confirmPassword: '',
           studentId: '',
           firstName: '',
-          lastName: ''
+          lastName: '',
+          status: '',
+          phoneNo: '',
+          position: '',
         });
 
         this.props.navigation.goBack();
@@ -80,35 +68,30 @@ export default class AddVicePresidentScreen extends React.Component {
       <Container style={styles.container}>
         <Content>
           <Form style={{ marginTop: 20 }}>
-            <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Username" name="username"
-                value={this.state.username}
-                onChangeText={val => this.setState({ username: val })} />
-            </Item>
-            <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Password" secureTextEntry name="password"
-                value={this.state.password}
-                onChangeText={val => this.setState({ password: val })} />
-            </Item>
-            <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Confirm Password" secureTextEntry name="confirmPassword"
-                value={this.state.confirmPassword}
-                onChangeText={val => this.setState({ confirmPassword: val })} />
-            </Item>
-            <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Student ID" name="studentId"
+          <Item style={{ marginRight: 15 }}>
+              <Input placeholder="รหัสรองคณบดี" name="studentId"
                 value={this.state.studentId}
                 onChangeText={val => this.setState({ studentId: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
-              <Input placeholder="First Name" name="firstName"
+              <Input placeholder="ชื่อ" name="firstName"
                 value={this.state.firstName}
                 onChangeText={val => this.setState({ firstName: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Last Name" name="lastname"
+              <Input placeholder="นามสกุล" name="lastname"
                 value={this.state.lastName}
                 onChangeText={val => this.setState({ lastName: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="เบอร์โทรศัพท์" name="phoneNo"
+                value={this.state.phoneNo}
+                onChangeText={val => this.setState({ phoneNo: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="ตำแหน่ง" name="position"
+                value={this.state.position}
+                onChangeText={val => this.setState({ position: val })} />
             </Item>
           </Form>
           <Button block style={{ margin: 5, marginTop: 20 }}
