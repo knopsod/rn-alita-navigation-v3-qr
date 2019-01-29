@@ -17,15 +17,34 @@ export default class AddActivityScreen extends React.Component {
     const { navigation } = props;
     this.state = {
       _key: navigation.getParam('_key', ''),
-      name: navigation.getParam('name', '')
+      id: navigation.getParam('id', ''),
+      name: navigation.getParam('name', ''),
+      operationDepartment: navigation.getParam('operationDepartment', ''),
+      characteristic: navigation.getParam('characteristic', ''),
+      objective: navigation.getParam('objective', ''),
+      location: navigation.getParam('location', ''),
+      period: navigation.getParam('period', '')
     };
   }
   onPress = () => {
     const { 
-      name
+      id,
+      name,
+      operationDepartment,
+      characteristic,
+      objective,
+      location,
+      period
     } = this.state;
 
-    if ( name === '' ) 
+    if ( id === '' ||
+      name === '' ||
+      operationDepartment === '' ||
+      characteristic === '' ||
+      objective === '' ||
+      location === '' ||
+      period === '' 
+    ) 
     {
       alert('กรุณาใส่ข้อมูลให้ครบ');
       return;  
@@ -37,26 +56,72 @@ export default class AddActivityScreen extends React.Component {
     var set = firebase.database().ref('Activities').child(key).set({ ...this.state, _key: key });
     set.then((data) => {
         this.setState({
-          name: ''
+          id: '',
+          name: '',
+          operationDepartment: '',
+          characteristic: '',
+          objective: '',
+          location: '',
+          period: ''
         });
 
         this.props.navigation.goBack();
     });
   }
   render() {
+    const {
+      _key,
+      id,
+      name,
+      operationDepartment,
+      characteristic,
+      objective,
+      location,
+      period
+    } = this.state;
     return (
       <Container style={styles.container}>
         <Content>
           <Form style={{ marginTop: 20 }}>
             <Item style={{ marginRight: 15 }}>
-              <Input placeholder="Activity Name" name="name"
-                value={this.state.name}
+              <Input placeholder="รหัสโครงการ" name="id"
+                value={id}
+                onChangeText={val => this.setState({ id: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="ชื่อโครงการ" name="name"
+                value={name}
                 onChangeText={val => this.setState({ name: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="ฝ่ายดำเนินการ" name="operationDepartment"
+                value={operationDepartment}
+                onChangeText={val => this.setState({ operationDepartment: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="ลักษณะของโครงการ" name="characteristic"
+                value={characteristic}
+                onChangeText={val => this.setState({ characteristic: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="วัตถุประสงค์" name="objective"
+                value={objective}
+                onChangeText={val => this.setState({ objective: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="สถานที่จัดกิจกรรม" name="location"
+                value={location}
+                onChangeText={val => this.setState({ location: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="ระยะเวลา" name="period"
+                value={period}
+                onChangeText={val => this.setState({ period: val })} />
             </Item>
           </Form>
           <Button block style={{ margin: 5, marginTop: 20 }}
             onPress={() => this.onPress()}>
-            <Text style={{ color: '#fff' }}>{ this.state._key ? 'บันทึก' : 'สร้างใหม่'}</Text>
+            <Text style={{ color: '#fff' }}>{ _key ? 'บันทึก' : 'สร้างใหม่'}</Text>
           </Button>
         </Content>
       </Container>

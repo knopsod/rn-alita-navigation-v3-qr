@@ -25,7 +25,7 @@ const ActivityStack = createStackNavigator(
       screen: ActivityScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'Activity',
+          headerTitle: 'กิจกรรม',
           headerLeft: (
             <Icon 
             style={{ paddingLeft: 10 }}
@@ -42,7 +42,7 @@ const ActivityStack = createStackNavigator(
       screen: AddActivityScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'Add Activity',
+          headerTitle: 'กิจกรรม',
           headerStyle: {
             backgroundColor: 'orange'
           }
@@ -58,7 +58,7 @@ const ReportingStack = createStackNavigator(
       screen: ReportingScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'Reporting',
+          headerTitle: 'รายงานกิจกรรม',
           headerLeft: (
             <Icon 
             style={{ paddingLeft: 10 }}
@@ -75,7 +75,7 @@ const ReportingStack = createStackNavigator(
       screen: AddReportScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'Add Report',
+          headerTitle: 'รายงานกิจกรรม',
           headerStyle: {
             backgroundColor: 'orange'
           }
@@ -87,8 +87,18 @@ const ReportingStack = createStackNavigator(
 
 const ClubTabNavigator = createBottomTabNavigator(
   {
-    Activity: ActivityStack,
-    Reporting: ReportingStack,
+    Activity: {
+      screen: ActivityStack,
+      navigationOptions: {
+        title: 'กิจกรรม'
+      }
+    },
+    Reporting: {
+      screen: ReportingStack,
+      navigationOptions: {
+        title: 'รายงานกิจกรรม'
+      }
+    },
   }, {
     navigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state.routes[navigation.state.index];
