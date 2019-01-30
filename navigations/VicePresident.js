@@ -11,7 +11,6 @@ import {
   FlatList
 } from 'react-navigation';
 
-import WelcomeScreen from '../screens/WelcomeScreen';
 import ReportsScreen from '../screens/vicepresident/ReportsScreen';
 import ReportDetailScreen from '../screens/vicepresident/ReportDetailScreen';
 
@@ -27,6 +26,12 @@ const ReportsStack = createStackNavigator(
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
           ),
           headerStyle: {
             backgroundColor: 'orange'
@@ -87,13 +92,7 @@ const VicePresidentStackNavigator = createStackNavigator(
 
 export const VicePresidentDrawerNavigator = createDrawerNavigator(
   {
-    Dashboard: VicePresidentStackNavigator,
-    SigOut: { 
-      screen: WelcomeScreen,
-      navigationOptions: ({navigation}) => ({
-        title: 'Sign-out'
-      })
-    }
+    Menu: VicePresidentStackNavigator
   }
 )
 

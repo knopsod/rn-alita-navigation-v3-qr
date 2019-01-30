@@ -21,13 +21,13 @@ export default class AddUserScreen extends React.Component {
     const { navigation } = props;
     this.state = {
       _key: navigation.getParam('_key', ''),
-      studentId: navigation.getParam('studentId', ''),
+      userId: navigation.getParam('userId', ''),
       idCardNo: navigation.getParam('idCardNo', ''),
-      prefix: navigation.getParam('prefix', ''),
+      prefix: navigation.getParam('prefix', 'mr'),
       firstName: navigation.getParam('firstName', ''),
       lastName: navigation.getParam('lastName', ''),
-      faculty: navigation.getParam('faculty', ''),
-      status: navigation.getParam('status', ''),
+      faculty: navigation.getParam('faculty', 'เทคโนโลยีสารสนเทศ'),
+      status: navigation.getParam('status', 's'),
       phoneNo: navigation.getParam('phoneNo', ''),
     };
   }
@@ -58,7 +58,7 @@ export default class AddUserScreen extends React.Component {
   }
   onPress = () => {
     const { 
-      studentId, 
+      userId, 
       idCardNo,
       prefix,
       firstName, 
@@ -68,7 +68,7 @@ export default class AddUserScreen extends React.Component {
       phoneNo,
     } = this.state;
 
-    if ( studentId === '' ||
+    if ( userId === '' ||
       idCardNo === '' ||
       prefix === '' ||
       firstName === '' ||
@@ -87,7 +87,7 @@ export default class AddUserScreen extends React.Component {
     var set = firebase.database().ref('Users').child(key).set({ ...this.state, _key: key });
     set.then((data) => {
         this.setState({
-          studentId: '',
+          userId: '',
           idCardNo: '',
           prefix: '',
           firstName: '',
@@ -102,7 +102,7 @@ export default class AddUserScreen extends React.Component {
   }
   render() {
     const { _key, 
-      studentId, 
+      userId, 
       idCardNo, 
       prefix, 
       firstName, 
@@ -115,10 +115,10 @@ export default class AddUserScreen extends React.Component {
         <Content>
           <Form style={{ marginTop: 20 }}>
             <Item style={{ marginRight: 15 }}>
-              <Input placeholder="รหัสนักศึกษา" name="studentId"
+              <Input placeholder="รหัสนักศึกษา" name="userId"
                 keyboardType="numeric"
-                value={studentId}
-                onChangeText={val => this.setState({ studentId: val })} />
+                value={userId}
+                onChangeText={val => this.setState({ userId: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="เลขบัตรประชาชน" name="idCardNo"
@@ -152,16 +152,24 @@ export default class AddUserScreen extends React.Component {
                 headerComponent={
                   <Header>
                     <Button transparent>
-                      Custom Back
+                      นักศึกษา
                     </Button>
-                    <Title>Custom Header</Title>
+                    <Title>เลือกสาขาวิชา</Title>
                   </Header>
                 }
                 mode='dropdown'
                 selectedValue={faculty}
                 onValueChange={this.onValueChange.bind(this)}>
-                <Item label='ICT' value='ICT' />
-                <Item label='SC' value='SC' />
+                <Item label='เทคโนโลยีสารสนเทศ' value='เทคโนโลยีสารสนเทศ' />
+                <Item label='สาธารณสุขศาสตร์' value='สาธารณสุขศาสตร์' />
+                <Item label='เคมี' value='เคมี' />
+                <Item label='ชีววิทยา' value='ชีววิทยา' />
+                <Item label='วิทยาศาสตร์สิ่งแวดล้อม' value='วิทยาศาสตร์สิ่งแวดล้อม' />
+                <Item label='คณิตศาสตร์ประยุกต์' value='คณิตศาสตร์ประยุกต์' />
+                <Item label='คหกรรมศาสตร์' value='คหกรรมศาสตร์' />
+                <Item label='วิทยาศาสตร์' value='วิทยาศาสตร์' />
+                <Item label='เทคโนโลยีสถาปัตยกรรม' value='เทคโนโลยีสถาปัตยกรรม' />
+                <Item label='เทคโนโลยีอุตสาหการ' value='เทคโนโลยีอุตสาหการ' />
               </Picker>
             </Item>
             <Item style={{ marginRight: 15 }}>
@@ -169,9 +177,9 @@ export default class AddUserScreen extends React.Component {
                 headerComponent={
                   <Header>
                     <Button transparent>
-                      Custom Back
+                      นักศึกษา
                     </Button>
-                    <Title>Custom Header</Title>
+                    <Title>สถานะ</Title>
                   </Header>
                 }
                 mode='dropdown'

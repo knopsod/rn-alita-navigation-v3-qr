@@ -12,7 +12,6 @@ import {
   FlatList
 } from 'react-navigation';
 
-import WelcomeScreen from '../screens/WelcomeScreen';
 import ActivityScreen from '../screens/club/ActivityScreen';
 import ReportingScreen from '../screens/club/ReportingScreen';
 import AddActivityScreen from '../screens/club/AddActivityScreen';
@@ -31,6 +30,12 @@ const ActivityStack = createStackNavigator(
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
           ),
           headerStyle: {
             backgroundColor: 'orange'
@@ -64,6 +69,12 @@ const ReportingStack = createStackNavigator(
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
           ),
           headerStyle: {
             backgroundColor: 'orange'
@@ -160,13 +171,7 @@ const ClubStackNavigator = createStackNavigator(
 
 export const ClubDrawerNavigator = createDrawerNavigator(
   {
-    Dashboard: ClubStackNavigator,
-    SigOut: { 
-      screen: WelcomeScreen,
-      navigationOptions: ({navigation}) => ({
-        title: 'Sign-out'
-      })
-    }
+    Menu: ClubStackNavigator
   }
 );
 

@@ -10,6 +10,8 @@ import {
   Thumbnail,
 } from "native-base";
 
+import firebase from '../Firebase';
+
 class WelcomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -18,32 +20,39 @@ class WelcomeScreen extends React.Component {
       username: '',
       password: ''
     }
+
+    this.child = firebase.database().ref().child('Users');
   }
   onPress = () => {
     const { navigation } = this.props;
     const { username } = this.state;
 
-    switch (username.toLowerCase()) {
-      case 's':
-        navigation.navigate('StudentRole')    
-        break;
-      
-      case 'c':
-        navigation.navigate('ClubRole')    
-        break;
+    this.child.orderByChild('userId').equalTo(username).on('child_added', function(snapshot) {
+      console.log(snapshot.val());
+      const status = snapshot.val().status;
 
+      switch (status.toLowerCase()) {
+        case 's':
+          navigation.navigate('StudentRole')    
+          break;
+        
+        case 'c':
+          navigation.navigate('ClubRole')    
+          break;
+        
+        case 'o':
+          navigation.navigate('OfficerRole')    
+          break;
       
-      case 'o':
-        navigation.navigate('OfficerRole')    
-        break;
-    
-      case 'v':
-        navigation.navigate('VicePresidentRole')    
-        break;
-    
-      default:
-        break;
-    }
+        case 'v':
+          navigation.navigate('VicePresidentRole')    
+          break;
+      
+        default:
+          break;
+      }
+    });
+
   }
   render() {
     const halfWidth = Dimensions.get('screen').width/2 - 40;

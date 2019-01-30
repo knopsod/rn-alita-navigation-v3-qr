@@ -41,7 +41,7 @@ export default class App extends React.Component {
 // Switch --------------------------------------------
 const AppSwitchNavigator = createSwitchNavigator(
   {
-    Welcome: { screen: WelcomeScreen },
+    WelcomeScreen: { screen: WelcomeScreen },
     StudentRole: { screen: StudentDrawerNavigator },
     OfficerRole: { screen: OfficerDrawerNavigator },
     ClubRole: { screen: ClubDrawerNavigator },

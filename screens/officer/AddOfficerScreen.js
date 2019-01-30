@@ -17,7 +17,7 @@ export default class AddOfficerScreen extends React.Component {
     const { navigation } = props;
     this.state = {
       _key: navigation.getParam('_key', ''),
-      studentId: navigation.getParam('studentId', ''),
+      userId: navigation.getParam('userId', ''),
       firstName: navigation.getParam('firstName', ''),
       lastName: navigation.getParam('lastName', ''),
       status: 'o',
@@ -27,7 +27,7 @@ export default class AddOfficerScreen extends React.Component {
   }
   onPress = () => {
     const { 
-      studentId, 
+      userId, 
       firstName, 
       lastName,
       status,
@@ -35,7 +35,7 @@ export default class AddOfficerScreen extends React.Component {
       position,
     } = this.state;
 
-    if ( studentId === '' ||
+    if ( userId === '' ||
       firstName === '' ||
       lastName === '' ||
       status === '' ||
@@ -52,7 +52,7 @@ export default class AddOfficerScreen extends React.Component {
     var set = firebase.database().ref('Users').child(key).set({ ...this.state, _key: key, status: 'o' });
     set.then((data) => {
         this.setState({
-          studentId: '',
+          userId: '',
           firstName: '',
           lastName: '',
           status: '',
@@ -64,41 +64,47 @@ export default class AddOfficerScreen extends React.Component {
     });
   }
   render() {
+    const { _key,
+      userId,
+      firstName,
+      lastName,
+      phoneNo,
+      position } = this.state;
     return (
       <Container style={styles.container}>
         <Content>
           <Form style={{ marginTop: 20 }}>
             <Item style={{ marginRight: 15 }}>
-              <Input placeholder="รหัสเจ้าหน้าที่" name="studentId"
+              <Input placeholder="รหัสเจ้าหน้าที่" name="userId"
                 keyboardType="numeric"
-                value={this.state.studentId}
-                onChangeText={val => this.setState({ studentId: val })} />
+                value={userId}
+                onChangeText={val => this.setState({ userId: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="ชื่อ" name="firstName"
-                value={this.state.firstName}
+                value={firstName}
                 onChangeText={val => this.setState({ firstName: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="นามสกุล" name="lastname"
-                value={this.state.lastName}
+                value={lastName}
                 onChangeText={val => this.setState({ lastName: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="เบอร์โทรศัพท์" name="phoneNo"
                 keyboardType="phone-pad"
-                value={this.state.phoneNo}
+                value={phoneNo}
                 onChangeText={val => this.setState({ phoneNo: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="ตำแหน่ง" name="position"
-                value={this.state.phoneNo}
+                value={position}
                 onChangeText={val => this.setState({ position: val })} />
             </Item>
           </Form>
           <Button block style={{ margin: 5, marginTop: 20 }}
             onPress={() => this.onPress()}>
-            <Text style={{ color: '#fff' }}>{ this.state._key ? 'บันทึก' : 'สร้างใหม่'}</Text>
+            <Text style={{ color: '#fff' }}>{ _key ? 'บันทึก' : 'สร้างใหม่'}</Text>
           </Button>
         </Content>
       </Container>

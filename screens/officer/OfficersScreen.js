@@ -71,7 +71,7 @@ export default class OfficersScreen extends React.Component {
               >
                 <Left>
                   <Text>
-                    {data.studentId}
+                    {data.userId}
                   </Text>
                 </Left>
                 <Right>

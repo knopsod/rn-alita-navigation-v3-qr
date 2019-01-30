@@ -71,7 +71,7 @@ export default class VicePresidentsScreen extends React.Component {
               >
                 <Left>
                   <Text>
-                    {data.studentId}
+                    {data.userId}
                   </Text>
                 </Left>
                 <Right>

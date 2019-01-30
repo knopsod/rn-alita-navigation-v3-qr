@@ -12,7 +12,6 @@ import {
   FlatList
 } from 'react-navigation';
 
-import WelcomeScreen from '../screens/WelcomeScreen';
 import ScanScreen from '../screens/student/ScanScreen';
 import HistoryScreen from '../screens/student/HistoryScreen';
 
@@ -28,6 +27,12 @@ const ScanStack = createStackNavigator(
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
           ),
           headerStyle: {
             backgroundColor: 'orange'
@@ -50,6 +55,12 @@ const HistoryStack = createStackNavigator(
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
           ),
           headerStyle: {
             backgroundColor: 'orange'
@@ -125,13 +136,7 @@ const StudentStackNavigator = createStackNavigator(
 
 export const StudentDrawerNavigator = createDrawerNavigator(
   {
-    Dashboard: StudentStackNavigator,
-    SigOut: { 
-      screen: WelcomeScreen,
-      navigationOptions: ({navigation}) => ({
-        title: 'Sign-out'
-      })
-    }
+    Menu: StudentStackNavigator
   }
 );
 

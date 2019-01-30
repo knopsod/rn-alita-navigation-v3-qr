@@ -11,8 +11,6 @@ import {
   FlatList
 } from 'react-navigation';
 
-import WelcomeScreen from '../screens/WelcomeScreen';
-
 import UsersScreen from '../screens/officer/UsersScreen';
 import AddUserScreen from '../screens/officer/AddUserScreen';
 
@@ -34,6 +32,12 @@ const UsersStack = createStackNavigator(
               style={{ paddingLeft: 10 }}
               onPress={() => navigation.openDrawer()}
               name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
           ),
           headerStyle: {
             backgroundColor: 'orange'
@@ -68,6 +72,12 @@ const OfficersStack = createStackNavigator(
               onPress={() => navigation.openDrawer()}
               name="md-menu" size={30} />
           ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
+          ),
           headerStyle: {
             backgroundColor: 'orange'
           }
@@ -100,6 +110,12 @@ const VicePresidentsStack = createStackNavigator(
               style={{ paddingLeft: 10 }}
               onPress={() => navigation.openDrawer()}
               name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
           ),
           headerStyle: {
             backgroundColor: 'orange'
@@ -205,13 +221,7 @@ const UsersStackNavigator = createStackNavigator(
 
 export const OfficerDrawerNavigator = createDrawerNavigator(
   {
-    Dashboard: UsersStackNavigator,
-    SigOut: { 
-      screen: WelcomeScreen,
-      navigationOptions: ({navigation}) => ({
-        title: 'Sign-out'
-      })
-    }
+    Menu: UsersStackNavigator
   }
 )
 
