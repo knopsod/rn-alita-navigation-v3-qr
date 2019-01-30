@@ -19,6 +19,7 @@ import AddOfficerScreen from '../screens/officer/AddOfficerScreen';
 
 import VicePresidentsScreen from '../screens/officer/VicePresidentsScreen';
 import AddVicePresidentScreen from '../screens/officer/AddVicePresidentScreen';
+import OfficerProfileScreen from '../screens/officer/OfficerProfileScreen';
 
 const UsersStack = createStackNavigator(
   {
@@ -219,9 +220,37 @@ const UsersStackNavigator = createStackNavigator(
   }
 );
 
+const OfficerProfileStackNavigator = createStackNavigator(
+  {
+    OfficerProfileScreen: OfficerProfileScreen
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerLeft: (
+          <Icon 
+            style={{ paddingLeft: 10 }}
+            onPress={() => navigation.openDrawer()}
+            name="md-menu" size={30} />
+        ),
+        headerRight: (
+          <Icon 
+            style={{ paddingRight: 10 }}
+            onPress={() => navigation.navigate('WelcomeScreen')}
+            name="md-log-out" size={30} />
+        ),
+        headerStyle: {
+          backgroundColor: 'orange'
+        }
+      }
+    }
+  }
+);
+
 export const OfficerDrawerNavigator = createDrawerNavigator(
   {
-    Menu: UsersStackNavigator
+    Menu: UsersStackNavigator,
+    Profile: OfficerProfileStackNavigator
   }
 )
 

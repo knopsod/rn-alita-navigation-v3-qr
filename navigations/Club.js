@@ -16,6 +16,7 @@ import ActivityScreen from '../screens/club/ActivityScreen';
 import ReportingScreen from '../screens/club/ReportingScreen';
 import AddActivityScreen from '../screens/club/AddActivityScreen';
 import AddReportScreen from '../screens/club/AddReportDetail';
+import ClubProfileScreen from '../screens/club/ClubProfileScreen';
 
 
 const ActivityStack = createStackNavigator(
@@ -169,9 +170,37 @@ const ClubStackNavigator = createStackNavigator(
   }
 );
 
+const ClubProfileStackNavigator = createStackNavigator(
+  {
+    ClubProfileScreen: ClubProfileScreen
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerLeft: (
+          <Icon 
+            style={{ paddingLeft: 10 }}
+            onPress={() => navigation.openDrawer()}
+            name="md-menu" size={30} />
+        ),
+        headerRight: (
+          <Icon 
+            style={{ paddingRight: 10 }}
+            onPress={() => navigation.navigate('WelcomeScreen')}
+            name="md-log-out" size={30} />
+        ),
+        headerStyle: {
+          backgroundColor: 'orange'
+        }
+      }
+    }
+  }
+);
+
 export const ClubDrawerNavigator = createDrawerNavigator(
   {
-    Menu: ClubStackNavigator
+    Menu: ClubStackNavigator,
+    Profile: ClubProfileStackNavigator
   }
 );
 

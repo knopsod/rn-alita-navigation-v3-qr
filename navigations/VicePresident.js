@@ -13,6 +13,7 @@ import {
 
 import ReportsScreen from '../screens/vicepresident/ReportsScreen';
 import ReportDetailScreen from '../screens/vicepresident/ReportDetailScreen';
+import VicePresidentProfileScreen from '../screens/vicepresident/VicePresidentProfileScreen';
 
 const ReportsStack = createStackNavigator(
   {
@@ -90,9 +91,37 @@ const VicePresidentStackNavigator = createStackNavigator(
   }
 );
 
+const VicePresidentProfileStackNavigator = createStackNavigator(
+  {
+    VicePresidentProfileScreen: VicePresidentProfileScreen
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerLeft: (
+          <Icon 
+            style={{ paddingLeft: 10 }}
+            onPress={() => navigation.openDrawer()}
+            name="md-menu" size={30} />
+        ),
+        headerRight: (
+          <Icon 
+            style={{ paddingRight: 10 }}
+            onPress={() => navigation.navigate('WelcomeScreen')}
+            name="md-log-out" size={30} />
+        ),
+        headerStyle: {
+          backgroundColor: 'orange'
+        }
+      }
+    }
+  }
+);
+
 export const VicePresidentDrawerNavigator = createDrawerNavigator(
   {
-    Menu: VicePresidentStackNavigator
+    Menu: VicePresidentStackNavigator,
+    Profile: VicePresidentProfileStackNavigator
   }
 )
 

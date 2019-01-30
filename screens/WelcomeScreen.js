@@ -25,7 +25,7 @@ class WelcomeScreen extends React.Component {
   }
   onPress = () => {
     const { navigation } = this.props;
-    const { username } = this.state;
+    const { username } = this.state;    
 
     this.child.orderByChild('userId').equalTo(username).on('child_added', function(snapshot) {
       console.log(snapshot.val());

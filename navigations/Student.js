@@ -14,6 +14,7 @@ import {
 
 import ScanScreen from '../screens/student/ScanScreen';
 import HistoryScreen from '../screens/student/HistoryScreen';
+import StudentProfileScreen from '../screens/student/StudentProfileScreen';
 
 const ScanStack = createStackNavigator(
   {
@@ -134,9 +135,37 @@ const StudentStackNavigator = createStackNavigator(
   }
 );
 
+const StudentProfileStackNavigator = createStackNavigator(
+  {
+    StudentProfileScreen: StudentProfileScreen
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerLeft: (
+          <Icon 
+            style={{ paddingLeft: 10 }}
+            onPress={() => navigation.openDrawer()}
+            name="md-menu" size={30} />
+        ),
+        headerRight: (
+          <Icon 
+            style={{ paddingRight: 10 }}
+            onPress={() => navigation.navigate('WelcomeScreen')}
+            name="md-log-out" size={30} />
+        ),
+        headerStyle: {
+          backgroundColor: 'orange'
+        }
+      }
+    }
+  }
+);
+
 export const StudentDrawerNavigator = createDrawerNavigator(
   {
-    Menu: StudentStackNavigator
+    Menu: StudentStackNavigator,
+    Profile: StudentProfileStackNavigator
   }
 );
 
