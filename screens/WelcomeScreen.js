@@ -28,7 +28,7 @@ class WelcomeScreen extends React.Component {
     const { username } = this.state;    
 
     this.child.orderByChild('userId').equalTo(username).on('child_added', function(snapshot) {
-      console.log(snapshot.val());
+      
       const status = snapshot.val().status;
 
       switch (status.toLowerCase()) {
@@ -55,16 +55,18 @@ class WelcomeScreen extends React.Component {
 
   }
   render() {
-    const halfWidth = Dimensions.get('screen').width/2 - 40;
+    const halfWidth = Dimensions.get('screen').width/2 - 70;
     return (
       <Container style={styles.container}>
-        <Content style={{ marginTop: 140 }}>
+        <Content style={{ marginTop: 80 }}>
           <Form>
             <Form style={{ marginLeft: halfWidth }}>
-              <Thumbnail large source={require('../assets/ict.jpg')}/>
+              <Thumbnail large source={require('../assets/logo.jpg')}
+                style={{ borderRadius: 70, width: 140, height: 140 }}/>
             </Form>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="Username"
+                keyboardType="numeric"
                 onChangeText={text => this.setState({ username: text })} />
             </Item>
             <Item style={{ marginRight: 15 }}>

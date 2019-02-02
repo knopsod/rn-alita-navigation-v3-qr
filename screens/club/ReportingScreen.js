@@ -18,10 +18,10 @@ export default class ReportingScreen extends Component {
     super(props);
 
     this.state = {
-      reports: []
+      activities: []
     }
 
-    this.child = firebase.database().ref().child('Reportings');
+    this.child = firebase.database().ref().child('Activities');
   }
   componentDidMount() {
     // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
@@ -30,33 +30,19 @@ export default class ReportingScreen extends Component {
       const data = snapshot.val();
       if (data) {
         this.setState(prevState => ({
-          reports: [data, ...prevState.reports]
+          activities: [data, ...prevState.activities]
         }))
       }
     });
-
-    this.child.on('child_changed', snapshot => {
-      const changedReport = Object.assign({}, snapshot.val());
-      const { reports } = this.state;
-      const filledReports = reports.filter(element => element._key !== changedReport._key);
-      filledReports.unshift(changedReport);
-      this.setState({ 
-        reports: filledReports
-      });
-    });
   }
   render() {
-    const { reports } = this.state;
+    const { activities } = this.state;
 
     return (
       <Container style={styles.container}>
         <Content>
-          <Button block style={{ margin: 5, marginTop: 20 }}
-            onPress={() => this.props.navigation.navigate('AddReportScreen')}>
-            <Text style={{ color: '#fff' }}>สร้างใหม่</Text>
-          </Button>
           <List
-            dataArray={reports}
+            dataArray={activities}
             renderRow={data => {
               return <ListItem
                 button

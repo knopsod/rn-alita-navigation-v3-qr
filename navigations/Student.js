@@ -22,7 +22,7 @@ const ScanStack = createStackNavigator(
       screen: ScanScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'Scan',
+          headerTitle: 'สแกน',
           headerLeft: (
             <Icon 
             style={{ paddingLeft: 10 }}
@@ -50,7 +50,7 @@ const HistoryStack = createStackNavigator(
       screen: HistoryScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'History',
+          headerTitle: 'ประวัติการเข้ากิจกรรม',
           headerLeft: (
             <Icon 
             style={{ paddingLeft: 10 }}
@@ -74,11 +74,22 @@ const HistoryStack = createStackNavigator(
 
 const StudentTabNavigator = createBottomTabNavigator(
   {
-    Scan: ScanStack,
-    History: HistoryStack
+    Scan: {
+      screen: ScanStack,
+      navigationOptions: {
+        title: 'สแกน'
+      }
+    },
+    History: {
+      screen: HistoryStack,
+      navigationOptions: {
+        title: 'ประวัติการเข้ากิจกรรม'
+      }
+    }
   }, {
     navigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state.routes[navigation.state.index];
+      
       return {
         header: null,
         headerTitle: routeName
@@ -164,8 +175,18 @@ const StudentProfileStackNavigator = createStackNavigator(
 
 export const StudentDrawerNavigator = createDrawerNavigator(
   {
-    Menu: StudentStackNavigator,
-    Profile: StudentProfileStackNavigator
+    Menu: {
+      screen: StudentStackNavigator,
+      navigationOptions: {
+        title: 'เมนู'
+      }
+    },
+    Profile: {
+      screen: StudentProfileStackNavigator,
+      navigationOptions: {
+        title: 'โปรไฟล์'
+      }
+    }
   }
 );
 

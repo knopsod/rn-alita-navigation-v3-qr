@@ -249,8 +249,18 @@ const OfficerProfileStackNavigator = createStackNavigator(
 
 export const OfficerDrawerNavigator = createDrawerNavigator(
   {
-    Menu: UsersStackNavigator,
-    Profile: OfficerProfileStackNavigator
+    Menu: {
+      screen: UsersStackNavigator,
+      navigationOptions: {
+        title: 'เมนู'
+      }
+    },
+    Profile: {
+      screen: OfficerProfileStackNavigator,
+      navigationOptions: {
+        title: 'โปรไฟล์'
+      }
+    }
   }
 )
 

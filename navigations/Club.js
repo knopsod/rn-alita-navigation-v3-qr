@@ -199,8 +199,18 @@ const ClubProfileStackNavigator = createStackNavigator(
 
 export const ClubDrawerNavigator = createDrawerNavigator(
   {
-    Menu: ClubStackNavigator,
-    Profile: ClubProfileStackNavigator
+    Menu: {
+      screen: ClubStackNavigator,
+      navigationOptions: {
+        title: 'เมนู'
+      }
+    },
+    Profile: {
+      screen: ClubProfileStackNavigator,
+      navigationOptions: {
+        title: 'โปรไฟล์'
+      }
+    }
   }
 );
 

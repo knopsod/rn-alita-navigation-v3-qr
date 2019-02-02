@@ -21,7 +21,7 @@ const ReportsStack = createStackNavigator(
       screen: ReportsScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'Reports',
+          headerTitle: 'รายงาน',
           headerLeft: (
             <Icon 
             style={{ paddingLeft: 10 }}
@@ -44,7 +44,7 @@ const ReportsStack = createStackNavigator(
       screen: ReportDetailScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'Report detail',
+          headerTitle: 'รายละเอียด',
           headerStyle: {
             backgroundColor: 'orange'
           }
@@ -120,8 +120,18 @@ const VicePresidentProfileStackNavigator = createStackNavigator(
 
 export const VicePresidentDrawerNavigator = createDrawerNavigator(
   {
-    Menu: VicePresidentStackNavigator,
-    Profile: VicePresidentProfileStackNavigator
+    Menu: {
+      screen: VicePresidentStackNavigator,
+      navigationOptions: {
+        title: 'เมนู'
+      }
+    },
+    Profile: {
+      screen: VicePresidentProfileStackNavigator,
+      navigationOptions: {
+        title: 'โปรไฟล์'
+      }
+    }
   }
 )
 
