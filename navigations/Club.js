@@ -17,6 +17,8 @@ import ReportingScreen from '../screens/club/ReportingScreen';
 import AddActivityScreen from '../screens/club/AddActivityScreen';
 import AddReportScreen from '../screens/club/AddReportDetail';
 import ClubProfileScreen from '../screens/club/ClubProfileScreen';
+import PicturesScreen from '../screens/club/PicturesScreen';
+import AddPictureScreen from '../screens/club/AddPictureScreen';
 
 
 const ActivityStack = createStackNavigator(
@@ -97,6 +99,45 @@ const ReportingStack = createStackNavigator(
   }
 );
 
+const PictureStack = createStackNavigator(
+  {
+    PicturesScreen: {
+      screen: PicturesScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'รูปกิจกรรม',
+          headerLeft: (
+            <Icon 
+            style={{ paddingLeft: 10 }}
+            onPress={() => navigation.openDrawer()}
+            name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
+          ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    AddPictureScreen: {
+      screen: AddPictureScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'รูปกิจกรรม',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    }
+  }
+);
+
 const ClubTabNavigator = createBottomTabNavigator(
   {
     Activity: {
@@ -111,6 +152,12 @@ const ClubTabNavigator = createBottomTabNavigator(
         title: 'รายงานกิจกรรม'
       }
     },
+    Picture: {
+      screen: PictureStack,
+      navigationOptions: {
+        title: 'รูปกิจกรรม'
+      }
+    }
   }, {
     navigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state.routes[navigation.state.index];
@@ -134,6 +181,8 @@ const ClubTabNavigator = createBottomTabNavigator(
         } else if (routeName === 'Reporting') {
           // iconName = `ios-options${focused ? '' : '-outline'}`;
           iconName = `md-clipboard`;
+        } else if (routeName === 'Picture') {
+          iconName = `md-images`;
         }
 
         // You can return any component that you like here!

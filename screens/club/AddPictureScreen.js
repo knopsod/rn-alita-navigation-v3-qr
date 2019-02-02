@@ -16,20 +16,19 @@ import {
 
 import firebase from '../../Firebase'
 
-export default class AddActivityScreen extends React.Component {
+export default class AddPictureScreen extends React.Component {
   constructor(props) {
     super(props);
     const { navigation } = props;
     this.state = {
       _key: '',
       activityKey: navigation.getParam('_key', ''),
-      detail: '',
-      amount: 0,
-      reports: [],
+      blob: '',
+      pictures: [],
     };
 
-    this.child = firebase.database().ref().child('Reportings').orderByChild('activityKey').equalTo(navigation.getParam('_key'));
-    this.ref = firebase.database().ref().child('Reportings');
+    this.child = firebase.database().ref().child('Pictures').orderByChild('activityKey').equalTo(navigation.getParam('_key'));
+    this.ref = firebase.database().ref().child('Pictures');
   }
   componentDidMount() {
     // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
@@ -38,7 +37,7 @@ export default class AddActivityScreen extends React.Component {
       const data = snapshot.val();
       if (data) {
         this.setState(prevState => ({
-          reports: [data, ...prevState.reports]
+          pictures: [data, ...prevState.pictures]
         }))
       }
     });
@@ -47,35 +46,33 @@ export default class AddActivityScreen extends React.Component {
       const { _key } = snapshot.val();
 
       this.setState({
-        reports: this.state.reports.filter(element => element._key !== _key)
+        pictures: this.state.pictures.filter(element => element._key !== _key)
       });
     })
   }
   onPress = () => {
     const { 
       activityKey,
-      detail,
-      amount
+      blob
     } = this.state;
 
     // https://www.youtube.com/watch?v=BWIN4JBm0-k&list=PLy9JCsy2u97m-xWAxGwHZ2vITtj4qBKDm&index=6
     // https://github.com/nathvarun/React-Native-Firebase-Tutorials/blob/master/Project%20Files/4%265%20Swipeable%20Lists/Complete/App.js
-    var key = this.state._key ? this.state._key : firebase.database().ref('Reportings').push().key;
-    var set = firebase.database().ref('Reportings').child(key).set({ activityKey, detail, amount, _key: key });
+    var key = this.state._key ? this.state._key : firebase.database().ref('Pictures').push().key;
+    var set = firebase.database().ref('Pictures').child(key).set({ activityKey, blob, _key: key });
     set.then((data) => {
         this.setState({
-          detail: '',
-          amount: 0
+          blob: ''
         });
 
         // this.props.navigation.goBack();
     });
   }
   confirmRemove(data) {
-    const { _key, detail, amount } = data;
+    const { _key, blob } = data;
     Alert.alert(
       'ลบ',
-      `${detail} ${amount}`,
+      `${blob}`,
       [
         {
           text: 'ยกเลิก',
@@ -92,29 +89,16 @@ export default class AddActivityScreen extends React.Component {
     )
   }
   render() {
-    const { reports } = this.state;
+    const { pictures } = this.state;
     return (
       <Container style={styles.container}>
         <Content>
-          <Form style={{ marginTop: 20 }}>
-            <Item style={{ marginRight: 15 }}>
-              <Input placeholder="รายละเอียด" name="detail"
-                value={this.state.detail}
-                onChangeText={val => this.setState({ detail: val })} />
-            </Item>
-            <Item style={{ marginRight: 15 }}>
-              <Input placeholder="ค่าใช้จ่าย" name="amount"
-                keyboardType="numeric"
-                value={this.state.amount.toString(10)}
-                onChangeText={val => this.setState({ amount: parseInt(val, 10) })} />
-            </Item>
-          </Form>
           <Button block style={{ margin: 5, marginTop: 20 }}
             onPress={() => this.onPress()}>
-            <Text style={{ color: '#fff' }}>{ this.state._key ? 'บันทึก' : 'สร้างใหม่'}</Text>
+            <Text style={{ color: '#fff' }}>อัพโหลด</Text>
           </Button>
           <List
-            dataArray={reports}
+            dataArray={pictures}
             renderRow={data => {
               return <ListItem
                 button
@@ -122,14 +106,9 @@ export default class AddActivityScreen extends React.Component {
               >
                 <Left>
                   <Text>
-                    {data.detail}
+                    {data.blob}
                   </Text>
                 </Left>
-                <Right>
-                  <Text>
-                    {data.amount.toString(10)}
-                  </Text>
-                </Right>
               </ListItem>}
             }
           />
