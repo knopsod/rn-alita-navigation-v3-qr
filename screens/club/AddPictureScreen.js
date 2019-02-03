@@ -11,22 +11,50 @@ import {
   ListItem,
   Left,
   Right,
-  Icon
+  Icon,
+  Thumbnail,
+  Body
 } from "native-base";
 import firebase from '../../Firebase';
 import { ImagePicker, Permissions } from 'expo';
 import uuid from 'uuid';
+import moment from 'moment';
 
 export default class AddPictureScreen extends React.Component {
   constructor(props) {
     super(props);
 
     const { navigation } = props;
+
     this.state = {
       activityKey: navigation.getParam('_key', ''),
+      uuID: '',
+      pictures: [],
     };
-  }
 
+    this.child = firebase.database().ref().child('Pictures').orderByChild('activityKey').equalTo(this.state.activityKey);
+    this.ref = firebase.database().ref().child('Pictures');
+  }
+  componentDidMount() {
+    // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
+    // https://github.com/rayn-studios-learning/message-board-app/blob/master/App.js
+    this.child.on('child_added', snapshot => {
+      const data = snapshot.val();
+      if (data) {
+        this.setState(prevState => ({
+          pictures: [data, ...prevState.pictures]
+        }))
+      }
+    });
+
+    this.child.on('child_removed', snapshot => {
+      const { _key } = snapshot.val();
+
+      this.setState({
+        pictures: this.state.pictures.filter(element => element._key !== _key)
+      });
+    })
+  }
   // https://www.youtube.com/watch?v=KkZckepfm2Q
   onChooseImagePress = async () => {
     let result = await ImagePicker.launchImageLibraryAsync();
@@ -34,7 +62,9 @@ export default class AddPictureScreen extends React.Component {
     if (!result.cancelled) {
       console.log('!cancelled');
       this.uploadImage(result.uri)
-        .then(() => {
+        .then((response) => {
+          console.log(response);
+          this.onUploaded(response);
           Alert.alert('อัพโหลด', 'สำเร็จ')
         })
         .catch((error) => {
@@ -42,7 +72,6 @@ export default class AddPictureScreen extends React.Component {
         });
     }
   }
-
   uploadImage = async (uri) => {
     const { activityKey } = this.state;
     
@@ -60,17 +89,57 @@ export default class AddPictureScreen extends React.Component {
       xhr.send(null);
     });
 
-    var ref = firebase.storage().ref(activityKey).child(uuid.v4());
+    const uuID = uuid.v4();
+
+    var ref = firebase.storage().ref(activityKey).child(uuID);
     const snapshot = await ref.put(blob);
+
+    this.setState({
+      activityKey,
+      uuID,
+    });
 
     // We're done with the blob, close and release it
     blob.close();
 
     return await snapshot.ref.getDownloadURL();
   }
-  
-  render() {
+  onUploaded = (uri) => {
+    const { activityKey, uuID } = this.state;
+    const dateTime = moment(new Date()).format("YYYY-MM-DD hh:mm:ss");
 
+    // https://www.youtube.com/watch?v=BWIN4JBm0-k&list=PLy9JCsy2u97m-xWAxGwHZ2vITtj4qBKDm&index=6
+    // https://github.com/nathvarun/React-Native-Firebase-Tutorials/blob/master/Project%20Files/4%265%20Swipeable%20Lists/Complete/App.js
+    var key = this.state._key ? this.state._key : firebase.database().ref('Pictures').push().key;
+    var set = firebase.database().ref('Pictures').child(key).set({ activityKey, uuID, uri, dateTime, _key: key });
+    set.then((data) => {
+        // this.props.navigation.goBack();
+    });
+  }
+  confirmRemove(data) {
+    const { _key, activityKey, uuID } = data;
+    Alert.alert(
+      'ลบ',
+      'รูปกิจกรรม',
+      [
+        {
+          text: 'ยกเลิก',
+          style: 'cancel'
+        },
+        {
+          text: 'ลบ',
+          onPress: () => {
+            this.ref.child(_key).remove();
+            var ref = firebase.storage().ref(activityKey).child(uuID).delete();
+          }
+        }
+      ],
+      { cancelable: false }
+    )
+  }
+  render() {
+    const { pictures } = this.state;
+    console.log(pictures);
     return (
       <Container style={styles.container}>
         <Content>
@@ -78,7 +147,28 @@ export default class AddPictureScreen extends React.Component {
             onPress={this.onChooseImagePress}>
             <Text style={{ color: '#fff' }}>อัพโหลด</Text>
           </Button>
-          
+          <List
+            dataArray={pictures}
+            renderRow={data => {
+              return <ListItem
+                thumbnail
+              >
+                <Left>
+                  <Thumbnail square source={{ uri: data.uri }} />
+                </Left>
+                <Body>
+                  <Text>อัพโหลด</Text>
+                  <Text note numberOfLines={1}>{ data.dateTime }</Text>
+                </Body>
+                <Right>
+                  <Button transparent
+                    onPress={() => this.confirmRemove(data)} >
+                    <Text>ลบ</Text>
+                  </Button>
+                </Right>
+              </ListItem>}
+            }
+          />
         </Content>
       </Container>
     );
