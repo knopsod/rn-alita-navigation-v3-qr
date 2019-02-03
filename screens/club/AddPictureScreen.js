@@ -56,6 +56,7 @@ export default class AddPictureScreen extends React.Component {
     })
   }
   // https://www.youtube.com/watch?v=KkZckepfm2Q
+  // https://github.com/expo/firebase-storage-upload-example/blob/master/App.js
   onChooseImagePress = async () => {
     let result = await ImagePicker.launchImageLibraryAsync();
 
