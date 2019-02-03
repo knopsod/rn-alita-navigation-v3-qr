@@ -13,10 +13,13 @@
     "native-base": "^2.10.0",
     "react": "16.5.0",
     "react-native": "^0.57.8",
+    "react-native-fetch-blob": "^0.10.8",
+    "react-native-image-picker": "^0.28.0",
     "react-native-map": "0.0.1",
     "react-native-vector-icons": "^6.1.0",
     "react-navigation": "^3.0.9",
-    "scheduler": "^0.12.0"
+    "scheduler": "^0.12.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"
