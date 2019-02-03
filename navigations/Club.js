@@ -19,6 +19,7 @@ import AddReportScreen from '../screens/club/AddReportDetail';
 import ClubProfileScreen from '../screens/club/ClubProfileScreen';
 import PicturesScreen from '../screens/club/PicturesScreen';
 import AddPictureScreen from '../screens/club/AddPictureScreen';
+import ThumbnailPictureScreen from '../screens/club/ThumbnailPictureScreen';
 
 
 const ActivityStack = createStackNavigator(
@@ -126,6 +127,17 @@ const PictureStack = createStackNavigator(
     },
     AddPictureScreen: {
       screen: AddPictureScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'รูปกิจกรรม',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    ThumbnailPictureScreen: {
+      screen: ThumbnailPictureScreen,
       navigationOptions: ({ navigation }) => {
         return {
           headerTitle: 'รูปกิจกรรม',

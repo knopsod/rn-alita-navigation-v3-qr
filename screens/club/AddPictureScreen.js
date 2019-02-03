@@ -153,8 +153,12 @@ export default class AddPictureScreen extends React.Component {
               return <ListItem
                 thumbnail
               >
-                <Left>
-                  <Thumbnail square source={{ uri: data.uri }} />
+                <Left
+                  >
+                  <Button transparent
+                    onPress={() => this.props.navigation.navigate('ThumbnailPictureScreen', data)} >
+                    <Thumbnail square source={{ uri: data.uri }} />
+                  </Button>
                 </Left>
                 <Body>
                   <Text>อัพโหลด</Text>
