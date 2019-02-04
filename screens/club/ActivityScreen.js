@@ -24,7 +24,6 @@ export default class ActivityScreen extends Component {
     
     AsyncStorage.getItem('userId')
       .then((value) => {
-        console.log(value, typeof value);
         this.child = firebase.database().ref().child('Activities').orderByChild('userId').equalTo(value);
 
         // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s

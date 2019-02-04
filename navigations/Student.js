@@ -22,7 +22,7 @@ const ScanStack = createStackNavigator(
       screen: ScanScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'สแกน',
+          headerTitle: 'สแกนคิวอาร์โค้ด',
           headerLeft: (
             <Icon 
             style={{ paddingLeft: 10 }}
@@ -50,7 +50,7 @@ const HistoryStack = createStackNavigator(
       screen: HistoryScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: 'ประวัติการเข้ากิจกรรม',
+          headerTitle: 'ข้อมูลการเข้าร่วมกิจกรรม',
           headerLeft: (
             <Icon 
             style={{ paddingLeft: 10 }}
@@ -77,13 +77,13 @@ const StudentTabNavigator = createBottomTabNavigator(
     Scan: {
       screen: ScanStack,
       navigationOptions: {
-        title: 'สแกน'
+        title: 'สแกนคิวอาร์โค้ด'
       }
     },
     History: {
       screen: HistoryStack,
       navigationOptions: {
-        title: 'ประวัติการเข้ากิจกรรม'
+        title: 'ข้อมูลการเข้าร่วมกิจกรรม'
       }
     }
   }, {

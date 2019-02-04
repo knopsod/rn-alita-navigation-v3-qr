@@ -33,6 +33,7 @@ class WelcomeScreen extends React.Component {
       const { status } = snapshot.val();
 
       AsyncStorage.setItem('userId', data.userId);
+      AsyncStorage.setItem('_userKey', data._key);
 
       switch (status.toLowerCase()) {
         case 's':
