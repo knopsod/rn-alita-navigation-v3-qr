@@ -92,7 +92,7 @@ export default class AddPictureScreen extends React.Component {
 
     const uuID = uuid.v4();
 
-    var ref = firebase.storage().ref(activityKey).child(uuID);
+    var ref = firebase.storage().ref('Activities/' + activityKey).child(uuID);
     const snapshot = await ref.put(blob);
 
     this.setState({
