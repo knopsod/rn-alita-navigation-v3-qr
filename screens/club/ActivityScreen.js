@@ -49,6 +49,15 @@ export default class ActivityScreen extends Component {
             activities: filledActivities
           });
         });
+
+        this.child.on('child_removed', snapshot => {
+          const { _key } = snapshot.val();
+          const { activities } = this.state;
+          const filledActivities = activities.filter(element => element._key !== _key);
+          this.setState({
+            activities: filledActivities
+          });
+        })
       });
   }
   render() {
@@ -64,13 +73,14 @@ export default class ActivityScreen extends Component {
           <List
             dataArray={activities}
             renderRow={data => {
+              const { id, name } = data;
               return <ListItem
                 button
                 onPress={() => this.props.navigation.navigate('AddActivityScreen', data)}
               >
                 <Left>
                   <Text>
-                    {data.name}
+                    {`${id} ${name}`}
                   </Text>
                 </Left>
                 <Right>

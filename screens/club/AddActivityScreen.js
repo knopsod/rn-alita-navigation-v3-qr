@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, StyleSheet, AsyncStorage } from 'react-native'
+import { Text, StyleSheet, AsyncStorage, Alert } from 'react-native'
 import {
   Container,
   Content,
@@ -76,6 +76,31 @@ export default class AddActivityScreen extends React.Component {
         this.props.navigation.goBack();
     });
   }
+  onDelete = () => {
+    Alert.alert(
+      'ลบ',
+      'รูปกิจกรรม',
+      [
+        {
+          text: 'ยกเลิก',
+          style: 'cancel'
+        },
+        {
+          text: 'ลบ',
+          onPress: () => {
+            const { _key } = this.state;
+            var ref = firebase.database().ref('Activities');
+            var query = ref.orderByChild('_key').equalTo(_key);
+            query.on('child_added', snapshot => {
+              snapshot.ref.remove();
+              this.props.navigation.goBack();
+            })
+          }
+        }
+      ],
+      { cancelable: false }
+    )
+  }
   render() {
     const {
       _key,
@@ -142,6 +167,10 @@ export default class AddActivityScreen extends React.Component {
             onPress={() => this.onPress()}>
             <Text style={{ color: '#fff' }}>{ _key ? 'บันทึก' : 'สร้างใหม่'}</Text>
           </Button>
+          { _key !== '' && <Button block danger style={{ margin: 5, marginTop: 5 }}
+            onPress={() => this.onDelete()}>
+            <Text style={{ color: '#fff' }}>ลบ</Text>
+          </Button> }
         </Content>
       </Container>
     );
