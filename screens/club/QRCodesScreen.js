@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, AsyncStorage } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import {
   Container,
   Content,
@@ -13,7 +13,7 @@ import {
 
 import firebase from '../../Firebase'
 
-export default class ReportingScreen extends Component {
+export default class QRCodesScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -21,21 +21,19 @@ export default class ReportingScreen extends Component {
       activities: []
     }
 
-    AsyncStorage.getItem('userId')
-      .then(value => {
-        this.child = firebase.database().ref().child('Activities').orderByChild('userId').equalTo(value);
-
-        // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
-        // https://github.com/rayn-studios-learning/message-board-app/blob/master/App.js
-        this.child.on('child_added', snapshot => {
-          const data = snapshot.val();
-          if (data) {
-            this.setState(prevState => ({
-              activities: [data, ...prevState.activities]
-            }))
-          }
-        });
-      });
+    this.child = firebase.database().ref().child('Activities');
+  }
+  componentDidMount() {
+    // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
+    // https://github.com/rayn-studios-learning/message-board-app/blob/master/App.js
+    this.child.on('child_added', snapshot => {
+      const data = snapshot.val();
+      if (data) {
+        this.setState(prevState => ({
+          activities: [data, ...prevState.activities]
+        }))
+      }
+    });
   }
   render() {
     const { activities } = this.state;
@@ -48,7 +46,7 @@ export default class ReportingScreen extends Component {
             renderRow={data => {
               return <ListItem
                 button
-                onPress={() => this.props.navigation.navigate('AddReportScreen', data)}
+                onPress={() => this.props.navigation.navigate('ThumbnailQRCodeScreen', data)}
               >
                 <Left>
                   <Text>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, AsyncStorage } from 'react-native'
 import {
   Container,
   Content,
@@ -17,33 +17,39 @@ export default class ActivityScreen extends Component {
   constructor(props) {
     super(props);
 
+    const { navigation } = props;
+
     this.state = {
-      activities: []
+      activities: [],
     }
 
-    this.child = firebase.database().ref().child('Activities');
-  }
-  componentDidMount() {
-    // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
-    // https://github.com/rayn-studios-learning/message-board-app/blob/master/App.js
-    this.child.on('child_added', snapshot => {
-      const data = snapshot.val();
-      if (data) {
-        this.setState(prevState => ({
-          activities: [data, ...prevState.activities]
-        }))
-      }
-    });
+    
+    AsyncStorage.getItem('userId')
+      .then((value) => {
+        console.log(value, typeof value);
+        this.child = firebase.database().ref().child('Activities').orderByChild('userId').equalTo(value);
 
-    this.child.on('child_changed', snapshot => {
-      const changedActivity = Object.assign({}, snapshot.val());
-      const { activities } = this.state;
-      const filledActivities = activities.filter(element => element._key !== changedActivity._key);
-      filledActivities.unshift(changedActivity);
-      this.setState({
-        activities: filledActivities
+        // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
+        // https://github.com/rayn-studios-learning/message-board-app/blob/master/App.js
+        this.child.on('child_added', snapshot => {
+          const data = snapshot.val();
+          if (data) {
+            this.setState(prevState => ({
+              activities: [data, ...prevState.activities]
+            }))
+          }
+        });
+
+        this.child.on('child_changed', snapshot => {
+          const changedActivity = Object.assign({}, snapshot.val());
+          const { activities } = this.state;
+          const filledActivities = activities.filter(element => element._key !== changedActivity._key);
+          filledActivities.unshift(changedActivity);
+          this.setState({
+            activities: filledActivities
+          });
+        });
       });
-    });
   }
   render() {
     const { activities } = this.state;

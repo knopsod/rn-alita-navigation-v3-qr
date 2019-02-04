@@ -16,7 +16,7 @@ import {
   Body
 } from "native-base";
 
-export default class AddPictureScreen extends React.Component {
+export default class ThumbnailPictureScreen extends React.Component {
   constructor(props) {
     super(props);
 

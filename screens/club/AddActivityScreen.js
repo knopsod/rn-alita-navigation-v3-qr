@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, AsyncStorage } from 'react-native'
 import {
   Container,
   Content,
@@ -24,8 +24,12 @@ export default class AddActivityScreen extends React.Component {
       objective: navigation.getParam('objective', ''),
       location: navigation.getParam('location', ''),
       period: navigation.getParam('period', ''),
-      plan: navigation.getParam('plan', '')
+      plan: navigation.getParam('plan', ''),
+      userId: navigation.getParam('userId', '')
     };
+
+    AsyncStorage.getItem('userId')
+      .then(value => this.setState({ userId: value }));
   }
   onPress = () => {
     const { 

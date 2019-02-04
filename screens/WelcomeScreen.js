@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, StyleSheet, Dimensions } from 'react-native'
+import { Text, StyleSheet, Dimensions, AsyncStorage } from 'react-native'
 import {
   Container,
   Content,
@@ -29,7 +29,10 @@ class WelcomeScreen extends React.Component {
 
     this.child.orderByChild('userId').equalTo(username).on('child_added', function(snapshot) {
       
-      const status = snapshot.val().status;
+      const data = snapshot.val();
+      const { status } = snapshot.val();
+
+      AsyncStorage.setItem('userId', data.userId);
 
       switch (status.toLowerCase()) {
         case 's':
@@ -37,7 +40,7 @@ class WelcomeScreen extends React.Component {
           break;
         
         case 'c':
-          navigation.navigate('ClubRole')    
+          navigation.navigate('ClubRole', data);
           break;
         
         case 'o':
@@ -51,8 +54,7 @@ class WelcomeScreen extends React.Component {
         default:
           break;
       }
-    });
-
+    })
   }
   render() {
     const halfWidth = Dimensions.get('screen').width/2 - 70;
