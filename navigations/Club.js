@@ -20,7 +20,8 @@ import ClubProfileScreen from '../screens/club/ClubProfileScreen';
 import PicturesScreen from '../screens/club/PicturesScreen';
 import AddPictureScreen from '../screens/club/AddPictureScreen';
 import ThumbnailPictureScreen from '../screens/club/ThumbnailPictureScreen';
-
+import QRCodesScreen from '../screens/club/QRCodesScreen';
+import QRCodeGeneratorScreen from '../screens/club/QRCodeGeneratorScreen';
 
 const ActivityStack = createStackNavigator(
   {
@@ -150,6 +151,45 @@ const PictureStack = createStackNavigator(
   }
 );
 
+const QRCodeStack = createStackNavigator(
+  {
+    QRCodesScreen: {
+      screen: QRCodesScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'QR Code กิจกรรม',
+          headerLeft: (
+            <Icon 
+            style={{ paddingLeft: 10 }}
+            onPress={() => navigation.openDrawer()}
+            name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
+          ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    QRCodeGeneratorScreen: {
+      screen: QRCodeGeneratorScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'QR Code กิจกรรม',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    }
+  }
+);
+
 const ClubTabNavigator = createBottomTabNavigator(
   {
     Activity: {
@@ -168,6 +208,12 @@ const ClubTabNavigator = createBottomTabNavigator(
       screen: PictureStack,
       navigationOptions: {
         title: 'รูปกิจกรรม'
+      }
+    },
+    QRCode: {
+      screen: QRCodeStack,
+      navigationOptions: {
+        title: 'QR Code'
       }
     }
   }, {
@@ -195,6 +241,8 @@ const ClubTabNavigator = createBottomTabNavigator(
           iconName = `md-clipboard`;
         } else if (routeName === 'Picture') {
           iconName = `md-images`;
+        } else if (routeName === 'QRCode') {
+          iconName = `md-barcode`;
         }
 
         // You can return any component that you like here!

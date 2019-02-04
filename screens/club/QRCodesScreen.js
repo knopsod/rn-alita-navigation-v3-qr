@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, AsyncStorage } from 'react-native'
 import {
   Container,
   Content,
@@ -21,19 +21,21 @@ export default class QRCodesScreen extends Component {
       activities: []
     }
 
-    this.child = firebase.database().ref().child('Activities');
-  }
-  componentDidMount() {
-    // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
-    // https://github.com/rayn-studios-learning/message-board-app/blob/master/App.js
-    this.child.on('child_added', snapshot => {
-      const data = snapshot.val();
-      if (data) {
-        this.setState(prevState => ({
-          activities: [data, ...prevState.activities]
-        }))
-      }
-    });
+    AsyncStorage.getItem('userId')
+      .then(value => {
+        this.child = firebase.database().ref().child('Activities').orderByChild('userId').equalTo(value);
+
+        // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
+        // https://github.com/rayn-studios-learning/message-board-app/blob/master/App.js
+        this.child.on('child_added', snapshot => {
+          const data = snapshot.val();
+          if (data) {
+            this.setState(prevState => ({
+              activities: [data, ...prevState.activities]
+            }))
+          }
+        });
+      });
   }
   render() {
     const { activities } = this.state;
@@ -46,7 +48,7 @@ export default class QRCodesScreen extends Component {
             renderRow={data => {
               return <ListItem
                 button
-                onPress={() => this.props.navigation.navigate('ThumbnailQRCodeScreen', data)}
+                onPress={() => this.props.navigation.navigate('QRCodeGeneratorScreen', data)}
               >
                 <Left>
                   <Text>
