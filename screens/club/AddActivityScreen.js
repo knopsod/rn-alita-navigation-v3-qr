@@ -94,6 +94,7 @@ export default class AddActivityScreen extends React.Component {
           <Form style={{ marginTop: 20 }}>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสโครงการ" name="id"
+                keyboardType="numeric"
                 value={id}
                 onChangeText={val => this.setState({ id: val })} />
             </Item>
