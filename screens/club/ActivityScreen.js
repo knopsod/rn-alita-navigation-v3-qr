@@ -15,9 +15,7 @@ import firebase from '../../Firebase'
 
 export default class ActivityScreen extends Component {
   constructor(props) {
-    super(props);
-
-    const { navigation } = props;
+    super(props);    
 
     this.state = {
       activities: [],

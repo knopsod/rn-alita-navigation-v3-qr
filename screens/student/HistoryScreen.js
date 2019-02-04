@@ -1,11 +1,22 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, AsyncStorage } from 'react-native'
 
 export default class HistoryScreen extends Component {
+  constructor(props) {
+    super(props);
+    const { navigation } = props;
+    this.state = {
+      activityKey: ''
+    };
+
+    AsyncStorage.getItem('activityKey')
+      .then(value => this.setState({ activityKey: value }));
+  }
   render() {
+    const { activityKey } = this.state;
     return (
       <View style={{...styles.container}}>
-        <Text>HistoryScreen</Text>
+        <Text>{ activityKey }</Text>
       </View>
     );
   }
