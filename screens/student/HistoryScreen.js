@@ -8,7 +8,9 @@ import {
   ListItem,
   Left,
   Right,
-  Icon
+  Icon,
+  Thumbnail,
+  Body
 } from "native-base";
 import moment from 'moment';
 import firebase from '../../Firebase'
@@ -16,18 +18,17 @@ import firebase from '../../Firebase'
 export default class HistoryScreen extends Component {
   constructor(props) {
     super(props);
-    const { navigation } = props;
     this.state = {
-      activityKey: '',
       userId: '',
+      activityKey: '',
       checkIns: [],
       activities: [],
     };
 
-    
     AsyncStorage.getItem('userId')
       .then(userId => {
         this.setState({ userId });
+        
         this.child = firebase.database().ref().child('CheckIns').orderByChild('userId').equalTo(userId);
     
         // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
@@ -41,53 +42,66 @@ export default class HistoryScreen extends Component {
             }));            
           }
         });
-      });
 
+        this.child.on('child_changed', snapshot => {
+          const data = snapshot.val();
+          const { checkIns } = this.state;
+
+          const filled = checkIns.filter(element => element._key !== data._key);
+          filled.unshift(data);
+
+          this.setState({
+            checkIns: filled,
+          });
+        });
+
+      });
   }
   componentDidMount() {
     const { navigation } = this.props;
 
     // https://stackoverflow.com/questions/50290818/react-navigation-detect-when-screen-tabbar-is-activated-appear-focus-blu
     this.subs = [
+      
       navigation.addListener('didFocus', (payload) => {
 
-        // firebase.database().ref('Activities/' + data.activityKey).once('value', actSnapshot => {
-        //   this.setState(prevState => ({
-        //     activities: [actSnapshot.val(), ...prevState.activities],
-        //   }));
+        AsyncStorage.getItem('scanned')
+          .then(scanned => {
 
-        //   if (this.state.checkIns.length === this.state.activities.length) {
-        //     var ci = this.state.checkIns;
-        //     var act = this.state.activities;
+            console.log(`scanned: ${scanned}`);
+            if (scanned !== 'scanned') return;
 
-        //     ci.forEach(ciElement => {
-        //       ciElement.activityName = act.find(actElement => actElement._key === ciElement.activityKey).name;
-        //     });
+            AsyncStorage.getItem('activityKey')
+              .then(activityKey => {
+                if (this.state.activityKey === activityKey) return;
+  
+                this.setState({ activityKey });
+  
+                console.log(`userId: ${this.state.userId}, activityKey: ${this.state.activityKey}`);
+  
+                firebase.database().ref('Activities/' + activityKey).once('value', actSnapshot => {
+                  const activityName = actSnapshot.val().name;
+                  const dateTime = moment(new Date()).format("YYYY-MM-DD hh:mm:ss");
+                  const { userId } = this.state;
+  
+                  // https://www.youtube.com/watch?v=BWIN4JBm0-k&list=PLy9JCsy2u97m-xWAxGwHZ2vITtj4qBKDm&index=6
+                  // https://github.com/nathvarun/React-Native-Firebase-Tutorials/blob/master/Project%20Files/4%265%20Swipeable%20Lists/Complete/App.js
+                  var key = firebase.database().ref('CheckIns').push().key;
+                  var set = firebase.database().ref('CheckIns').child(key)
+                    .set({ activityKey, activityName, userId, dateTime, uri: '', _key: key });
+      
+                  set.then(data => {
+                    
+                  });
+                  
+                });
+                
+              });
 
-        //     this.setState({
-        //       checkIns: ci,
-        //     });
-        //   }
-        // });
-
-        AsyncStorage.getItem('activityKey')
-          .then(activityKey => {
-            const { userId, checkIns } = this.state;
-            const dateTime = moment(new Date()).format("YYYY-MM-DD hh:mm:ss");
-
-            if (checkIns.find((element) => element.activityKey === activityKey)) return;
-            
-            // https://www.youtube.com/watch?v=BWIN4JBm0-k&list=PLy9JCsy2u97m-xWAxGwHZ2vITtj4qBKDm&index=6
-            // https://github.com/nathvarun/React-Native-Firebase-Tutorials/blob/master/Project%20Files/4%265%20Swipeable%20Lists/Complete/App.js
-            var key = firebase.database().ref('CheckIns').push().key;
-            var set = firebase.database().ref('CheckIns').child(key)
-              .set({ activityKey, userId, dateTime, activityName: '', _key: key });
-
-            set.then(data => {
-              
-            });
           });
-      }),
+        
+      })
+
     ];
   }
   render() {
@@ -99,16 +113,19 @@ export default class HistoryScreen extends Component {
           <List
             dataArray={checkIns}
             renderRow={data => {
-              const { activityKey, activityName, dateTime } = data;
+              const { activityName, dateTime, uri } = data;
               console.log(activityName);
               return <ListItem
-                button
+                thumbnail
+                onPress={() => this.props.navigation.navigate('SelfyScreen', data)}
               >
                 <Left>
-                  <Text>
-                    {`${dateTime}, ${activityName}, ${activityKey}`}
-                  </Text>
+                  <Thumbnail square source={{ uri }} />
                 </Left>
+                <Body>
+                  <Text>{`${dateTime}`}</Text>
+                  <Text note numberOfLines={1}>{`${activityName}`}</Text>
+                </Body>
                 <Right>
                   <Icon name="arrow-forward" />
                 </Right>

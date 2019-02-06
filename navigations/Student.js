@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, AsyncStorage } from 'react-native';
 import Icon from '@expo/vector-icons/Ionicons';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -15,6 +15,7 @@ import {
 import ScanScreen from '../screens/student/ScanScreen';
 import HistoryScreen from '../screens/student/HistoryScreen';
 import StudentProfileScreen from '../screens/student/StudentProfileScreen';
+import SelfyScreen from '../screens/student/SelfyScreen';
 
 const ScanStack = createStackNavigator(
   {
@@ -32,7 +33,10 @@ const ScanStack = createStackNavigator(
           headerRight: (
             <Icon 
               style={{ paddingRight: 10 }}
-              onPress={() => navigation.navigate('WelcomeScreen')}
+              onPress={() => {
+                AsyncStorage.setItem('scanned', 'unscan');
+                return navigation.navigate('WelcomeScreen')
+              }}
               name="md-log-out" size={30} />
           ),
           headerStyle: {
@@ -60,9 +64,23 @@ const HistoryStack = createStackNavigator(
           headerRight: (
             <Icon 
               style={{ paddingRight: 10 }}
-              onPress={() => navigation.navigate('WelcomeScreen')}
+              onPress={() => {
+                AsyncStorage.setItem('scanned', 'unscan');
+                return navigation.navigate('WelcomeScreen')
+              }}
               name="md-log-out" size={30} />
           ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    SelfyScreen: {
+      screen: SelfyScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'ข้อมูลการเข้าร่วมกิจกรรม',
           headerStyle: {
             backgroundColor: 'orange'
           }

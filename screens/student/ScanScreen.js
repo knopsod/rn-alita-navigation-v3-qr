@@ -10,6 +10,7 @@ export default class ScanScreen extends Component {
     this.state = {
       hasCameraPermission: null,
     }
+
   }
 
   async componentDidMount() {
@@ -20,6 +21,7 @@ export default class ScanScreen extends Component {
     // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     const { navigation } = this.props;
     
+    AsyncStorage.setItem('scanned', 'scanned');
     AsyncStorage.setItem('activityKey', data);
     navigation.navigate('History');
   }
