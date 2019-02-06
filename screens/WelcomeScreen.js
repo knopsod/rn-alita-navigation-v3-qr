@@ -78,7 +78,7 @@ class WelcomeScreen extends React.Component {
             </Item>
             <Button block style={{ margin: 5, marginTop: 30 }}
               onPress={() => this.onPress()}>
-              <Text style={{ color: '#fff' }}>Sign-in</Text>
+              <Text style={{ color: '#fff' }}>เข้าสู่ระบบ</Text>
             </Button>
           </Form>
         </Content>

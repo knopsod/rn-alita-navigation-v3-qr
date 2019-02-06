@@ -20,7 +20,7 @@ import { ImagePicker, Permissions } from 'expo';
 import uuid from 'uuid';
 import moment from 'moment';
 
-export default class ThumbnailPictureScreen extends React.Component {
+export default class SelfyScreen extends React.Component {
   constructor(props) {
     super(props);
 
