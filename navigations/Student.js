@@ -16,6 +16,7 @@ import ScanScreen from '../screens/student/ScanScreen';
 import HistoryScreen from '../screens/student/HistoryScreen';
 import StudentProfileScreen from '../screens/student/StudentProfileScreen';
 import SelfyScreen from '../screens/student/SelfyScreen';
+import AvailableActivitiesScreen from '../screens/student/AvailableActivitesScreen';
 
 const ScanStack = createStackNavigator(
   {
@@ -90,6 +91,37 @@ const HistoryStack = createStackNavigator(
   }
 );
 
+const AvailableActivitiesStack = createStackNavigator(
+  {
+    AvailableActivities: {
+      screen: AvailableActivitiesScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'ข้อมูลกิจกรรม',
+          headerLeft: (
+            <Icon 
+            style={{ paddingLeft: 10 }}
+            onPress={() => navigation.openDrawer()}
+            name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => {
+                AsyncStorage.setItem('scanned', 'unscan');
+                return navigation.navigate('WelcomeScreen')
+              }}
+              name="md-log-out" size={30} />
+          ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    }
+  }
+);
+
 const StudentTabNavigator = createBottomTabNavigator(
   {
     Scan: {
@@ -102,6 +134,12 @@ const StudentTabNavigator = createBottomTabNavigator(
       screen: HistoryStack,
       navigationOptions: {
         title: 'ข้อมูลการเข้าร่วมกิจกรรม'
+      }
+    },
+    Available: {
+      screen: AvailableActivitiesStack,
+      navigationOptions: {
+        title: 'ข้อมูลกิจกรรม'
       }
     }
   }, {
@@ -128,6 +166,8 @@ const StudentTabNavigator = createBottomTabNavigator(
         } else if (routeName === 'History') {
           // iconName = `ios-options${focused ? '' : '-outline'}`;
           iconName = `md-paper`;
+        } else if (routeName === 'Available') {
+          iconName = `md-flag`;
         }
 
         // You can return any component that you like here!
