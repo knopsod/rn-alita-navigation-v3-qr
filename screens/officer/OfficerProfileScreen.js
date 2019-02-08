@@ -25,6 +25,11 @@ export default class OfficerProfileScreen extends Component {
       position: navigation.getParam('position', ''),
     };
   }
+  componentDidMount() {
+    // https://www.google.com/search?q=asyncstorage+setitem+object&oq=AsyncStorage+obj&aqs=chrome.3.69i57j69i60j0l4.12326j0j7&sourceid=chrome&ie=UTF-8
+    // https://stackoverflow.com/questions/35596187/react-native-asyncstorage-storing-values-other-than-strings
+    // https://medium.com/@richardzhanguw/storing-and-retrieving-objects-using-asyncstorage-in-react-native-6bb1745fdcdd
+  }
   onPress = () => {
     const { 
       userId, 
