@@ -61,7 +61,8 @@ export default class AddPictureScreen extends React.Component {
     let result = await ImagePicker.launchImageLibraryAsync();
 
     if (!result.cancelled) {
-      console.log('!cancelled');
+      console.log('!result.cancelled');
+      console.log('result: ', result);
       this.uploadImage(result.uri)
         .then((response) => {
           console.log(response);

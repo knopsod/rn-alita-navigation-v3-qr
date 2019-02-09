@@ -16,7 +16,7 @@ import {
   Body
 } from "native-base";
 import firebase from '../../Firebase';
-import { ImagePicker, Permissions } from 'expo';
+import { ImagePicker, Permissions, MapView } from 'expo';
 import uuid from 'uuid';
 import moment from 'moment';
 
@@ -34,6 +34,9 @@ export default class SelfyScreen extends React.Component {
       uri: navigation.getParam('uri', ''),
       userId: navigation.getParam('userId', ''), 
       uuID: '',
+      DateTimeOriginal: navigation.getParam('DateTimeOriginal', ''),
+      GPSLatitude: navigation.getParam('GPSLatitude', ''),
+      GPSLongitude: navigation.getParam('GPSLongitude', ''),
     };
 
     console.log(`_key: ${this.state._key}, uri: ${this.state.uri}`);
@@ -42,14 +45,17 @@ export default class SelfyScreen extends React.Component {
   // https://www.youtube.com/watch?v=KkZckepfm2Q
   // https://github.com/expo/firebase-storage-upload-example/blob/master/App.js
   onChooseImagePress = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync();
+    let result = await ImagePicker.launchImageLibraryAsync({ exif: true });
 
     if (!result.cancelled) {
-      console.log('!cancelled');
+      console.log('!result.cancelled');
+      console.log('result: ', result);
+      const { DateTimeOriginal, GPSLatitude, GPSLongitude } = result.exif;
+      console.log(DateTimeOriginal, GPSLatitude, GPSLongitude);
       this.uploadImage(result.uri)
         .then((response) => {
           console.log(response);
-          this.onUploaded(response);
+          this.onUploaded(response, DateTimeOriginal, GPSLatitude, GPSLongitude);
           Alert.alert('อัพโหลด', 'สำเร็จ')
         })
         .catch((error) => {
@@ -89,22 +95,33 @@ export default class SelfyScreen extends React.Component {
 
     return await snapshot.ref.getDownloadURL();
   }
-  onUploaded = (uri) => {
+  onUploaded = (uri, DateTimeOriginal, GPSLatitude, GPSLongitude) => {
+    console.log(DateTimeOriginal, GPSLatitude, GPSLongitude);
     const { _key, activityKey, activityName, dateTime, userId } = this.state;
     // const dateTime = moment(new Date()).format("YYYY-MM-DD hh:mm:ss");
 
     // https://www.youtube.com/watch?v=BWIN4JBm0-k&list=PLy9JCsy2u97m-xWAxGwHZ2vITtj4qBKDm&index=6
     // https://github.com/nathvarun/React-Native-Firebase-Tutorials/blob/master/Project%20Files/4%265%20Swipeable%20Lists/Complete/App.js
-    var set = firebase.database().ref('CheckIns').child(_key).set({ _key, activityKey, activityName, dateTime, uri, userId });
+    var set = firebase.database().ref('CheckIns').child(_key).set({ 
+      _key, 
+      activityKey, 
+      activityName, 
+      dateTime, 
+      userId,
+      uri,
+      DateTimeOriginal,
+      GPSLatitude,
+      GPSLongitude
+    });
     set.then(() => {
-      this.setState({ uri });
+      this.setState({ uri, DateTimeOriginal, GPSLatitude, GPSLongitude });
     });
   }
   
   render() {
     const halfWidth = Dimensions.get('screen').width/2;
     const scWidth = Dimensions.get('screen').width - 10;
-    const { uri } = this.state;
+    const { uri, DateTimeOriginal, GPSLatitude, GPSLongitude } = this.state;
     return (
       <Container style={styles.container}>
         <Content>
@@ -115,6 +132,21 @@ export default class SelfyScreen extends React.Component {
           <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
             <Thumbnail square large source={{ uri: uri }}
               style={{ width: scWidth, height: scWidth }}/>
+          </Form>
+          <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
+            <Text>{`ถ่ายเมื่อ : ${DateTimeOriginal}`}</Text>
+            <Text>{`ลติจูด: ${GPSLatitude}`}</Text>
+            <Text>{`ลองจิจูด: ${GPSLongitude}`}</Text>
+          </Form>
+          <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
+            <MapView
+              initialRegion={{
+                latitude: parseFloat(GPSLatitude),
+                longitude: parseFloat(GPSLongitude),
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            />
           </Form>
         </Content>
       </Container>
