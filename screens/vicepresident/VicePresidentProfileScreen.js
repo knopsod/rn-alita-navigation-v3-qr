@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, AsyncStorage } from 'react-native'
 import {
   Container,
   Content,
@@ -29,6 +29,14 @@ export default class VicePresidentProfileScreen extends Component {
     // https://www.google.com/search?q=asyncstorage+setitem+object&oq=AsyncStorage+obj&aqs=chrome.3.69i57j69i60j0l4.12326j0j7&sourceid=chrome&ie=UTF-8
     // https://stackoverflow.com/questions/35596187/react-native-asyncstorage-storing-values-other-than-strings
     // https://medium.com/@richardzhanguw/storing-and-retrieving-objects-using-asyncstorage-in-react-native-6bb1745fdcdd
+    console.log('cmd: VicePresidentProfileScreen');
+    AsyncStorage.getItem('User')
+      .then(data => {
+        const user = JSON.parse(data);
+        this.setState({
+          ...user
+        });
+      });
   }
   onPress = () => {
     const { 
@@ -55,18 +63,18 @@ export default class VicePresidentProfileScreen extends Component {
     // https://github.com/nathvarun/React-Native-Firebase-Tutorials/blob/master/Project%20Files/4%265%20Swipeable%20Lists/Complete/App.js
     var key = this.state._key ? this.state._key : firebase.database().ref('Users').push().key;
     var set = firebase.database().ref('Users').child(key).set({ ...this.state, _key: key, status: 'v' });
-    set.then((data) => {
-        this.setState({
-          userId: '',
-          firstName: '',
-          lastName: '',
-          status: '',
-          phoneNo: '',
-          position: '',
-        });
+    // set.then((data) => {
+    //   this.setState({
+    //     userId: '',
+    //     firstName: '',
+    //     lastName: '',
+    //     status: '',
+    //     phoneNo: '',
+    //     position: '',
+    //   });
 
-        this.props.navigation.goBack();
-    });
+    //   this.props.navigation.goBack();
+    // });
   }
   render() {
     const { _key,
