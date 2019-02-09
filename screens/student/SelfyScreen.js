@@ -134,19 +134,26 @@ export default class SelfyScreen extends React.Component {
               style={{ width: scWidth, height: scWidth }}/>
           </Form>
           <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
-            <Text>{`ถ่ายเมื่อ : ${DateTimeOriginal}`}</Text>
+            <Text>{`เมื่อ : ${DateTimeOriginal}`}</Text>
             <Text>{`ลติจูด: ${GPSLatitude}`}</Text>
             <Text>{`ลองจิจูด: ${GPSLongitude}`}</Text>
           </Form>
           <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
-            <MapView
+            <MapView style={{ width: scWidth, height: scWidth }}
               initialRegion={{
                 latitude: parseFloat(GPSLatitude),
                 longitude: parseFloat(GPSLongitude),
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}
-            />
+            >
+              <MapView.Marker
+                coordinate={{
+                  latitude: parseFloat(GPSLatitude),
+                  longitude: parseFloat(GPSLongitude),
+                }}
+                />
+            </MapView>
           </Form>
         </Content>
       </Container>
