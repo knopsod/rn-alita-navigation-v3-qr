@@ -24,10 +24,14 @@ export default class ReportDetailScreen extends React.Component {
       _key: '',
       activityKey: navigation.getParam('_key', ''),
       reports: [],
+      checkIns: [],
     };
 
     this.child = firebase.database().ref().child('Reportings').orderByChild('activityKey').equalTo(navigation.getParam('_key'));
     this.ref = firebase.database().ref().child('Reportings');
+
+    this.checkInsChild = firebase.database().ref().child('CheckIns').orderByChild('activityKey').equalTo(navigation.getParam('_key'));
+    this.checkInsRef = firebase.database().ref().child('CheckIns');
   }
   componentDidMount() {
     // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
@@ -40,12 +44,27 @@ export default class ReportDetailScreen extends React.Component {
         }))
       }
     });
+
+    this.checkInsChild.on('child_added', snapshot => {
+      const data = snapshot.val();
+      if (data) {
+        this.setState(prevState => ({
+          checkIns: [data, ...prevState.checkIns]
+        }))
+      }
+    });
   }
   render() {
-    const { reports } = this.state;
+    const { reports, checkIns } = this.state;
     return (
       <Container style={styles.container}>
         <Content>
+          <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
+            <Text>{`จำนวนผู้เข้าร่วมกิจกรรม : ${checkIns.length} คน`}</Text>
+          </Form>
+          <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
+            <Text>{`รายละเอียด`}</Text>
+          </Form>
           <List
             dataArray={reports}
             renderRow={data => {
@@ -60,7 +79,7 @@ export default class ReportDetailScreen extends React.Component {
                 </Left>
                 <Right>
                   <Text>
-                    {data.amount.toString(10)}
+                    {`${data.amount.toString(10)} บาท`}
                   </Text>
                 </Right>
               </ListItem>}
