@@ -11,7 +11,9 @@ import {
   ListItem,
   Left,
   Right,
-  Icon
+  Icon,
+  Thumbnail,
+  Body
 } from "native-base";
 
 import firebase from '../../Firebase'
@@ -25,13 +27,14 @@ export default class ReportDetailScreen extends React.Component {
       activityKey: navigation.getParam('_key', ''),
       reports: [],
       checkIns: [],
+      pictures: [],
     };
 
     this.child = firebase.database().ref().child('Reportings').orderByChild('activityKey').equalTo(navigation.getParam('_key'));
-    this.ref = firebase.database().ref().child('Reportings');
 
     this.checkInsChild = firebase.database().ref().child('CheckIns').orderByChild('activityKey').equalTo(navigation.getParam('_key'));
-    this.checkInsRef = firebase.database().ref().child('CheckIns');
+
+    this.picturesChild = firebase.database().ref().child('Pictures').orderByChild('activityKey').equalTo(navigation.getParam('_key'));
   }
   componentDidMount() {
     // https://www.youtube.com/watch?v=Di607bTqhPc&t=2186s
@@ -53,9 +56,18 @@ export default class ReportDetailScreen extends React.Component {
         }))
       }
     });
+
+    this.picturesChild.on('child_added', snapshot => {
+      const data = snapshot.val();
+      if (data) {
+        this.setState(prevState => ({
+          pictures: [data, ...prevState.pictures]
+        }))
+      }
+    });
   }
   render() {
-    const { reports, checkIns } = this.state;
+    const { reports, checkIns, pictures } = this.state;
     return (
       <Container style={styles.container}>
         <Content>
@@ -81,6 +93,32 @@ export default class ReportDetailScreen extends React.Component {
                   <Text>
                     {`${data.amount.toString(10)} บาท`}
                   </Text>
+                </Right>
+              </ListItem>}
+            }
+          />
+          <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
+            <Text>{`รูปกิจกรรม`}</Text>
+          </Form>
+          <List
+            dataArray={pictures}
+            renderRow={data => {
+              return <ListItem
+                thumbnail
+              >
+                <Left
+                  >
+                  <Button transparent
+                     >
+                    <Thumbnail square source={{ uri: data.uri }} />
+                  </Button>
+                </Left>
+                <Body>
+                  <Text>เมื่อ</Text>
+                  <Text note numberOfLines={1}>{ data.dateTime }</Text>
+                </Body>
+                <Right>
+                  
                 </Right>
               </ListItem>}
             }

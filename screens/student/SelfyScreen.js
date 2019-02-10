@@ -35,8 +35,8 @@ export default class SelfyScreen extends React.Component {
       userId: navigation.getParam('userId', ''), 
       uuID: '',
       DateTimeOriginal: navigation.getParam('DateTimeOriginal', ''),
-      GPSLatitude: navigation.getParam('GPSLatitude', ''),
-      GPSLongitude: navigation.getParam('GPSLongitude', ''),
+      GPSLatitude: navigation.getParam('GPSLatitude', 0),
+      GPSLongitude: navigation.getParam('GPSLongitude', 0),
     };
 
     console.log(`_key: ${this.state._key}, uri: ${this.state.uri}`);
@@ -141,16 +141,16 @@ export default class SelfyScreen extends React.Component {
           <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
             <MapView style={{ width: scWidth, height: scWidth }}
               initialRegion={{
-                latitude: parseFloat(GPSLatitude),
-                longitude: parseFloat(GPSLongitude),
+                latitude: GPSLatitude,
+                longitude: GPSLongitude,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}
             >
               <MapView.Marker
                 coordinate={{
-                  latitude: parseFloat(GPSLatitude),
-                  longitude: parseFloat(GPSLongitude),
+                  latitude: GPSLatitude,
+                  longitude: GPSLongitude,
                 }}
                 />
             </MapView>

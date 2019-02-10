@@ -163,7 +163,7 @@ export default class AddPictureScreen extends React.Component {
                   </Button>
                 </Left>
                 <Body>
-                  <Text>อัพโหลด</Text>
+                  <Text>เมื่อ</Text>
                   <Text note numberOfLines={1}>{ data.dateTime }</Text>
                 </Body>
                 <Right>
