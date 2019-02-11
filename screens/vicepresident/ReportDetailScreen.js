@@ -105,11 +105,12 @@ export default class ReportDetailScreen extends React.Component {
             renderRow={data => {
               return <ListItem
                 thumbnail
+                onPress={() => this.props.navigation.navigate('ThumbnailReportDetailScreen', data)}
               >
                 <Left
                   >
                   <Button transparent
-                     >
+                    onPress={() => this.props.navigation.navigate('ThumbnailReportDetailScreen', data)} >
                     <Thumbnail square source={{ uri: data.uri }} />
                   </Button>
                 </Left>
@@ -118,7 +119,7 @@ export default class ReportDetailScreen extends React.Component {
                   <Text note numberOfLines={1}>{ data.dateTime }</Text>
                 </Body>
                 <Right>
-                  
+                  <Icon name="arrow-forward" />
                 </Right>
               </ListItem>}
             }

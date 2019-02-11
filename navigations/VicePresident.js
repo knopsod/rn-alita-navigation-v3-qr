@@ -13,6 +13,7 @@ import {
 
 import ReportsScreen from '../screens/vicepresident/ReportsScreen';
 import ReportDetailScreen from '../screens/vicepresident/ReportDetailScreen';
+import ThumbnailReportDetailScreen from '../screens/vicepresident/ThumbnailReportDetailScreen';
 import VicePresidentProfileScreen from '../screens/vicepresident/VicePresidentProfileScreen';
 
 const ReportsStack = createStackNavigator(
@@ -45,6 +46,17 @@ const ReportsStack = createStackNavigator(
       navigationOptions: ({ navigation }) => {
         return {
           headerTitle: 'รายละเอียด',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    ThumbnailReportDetailScreen: {
+      screen: ThumbnailReportDetailScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'รูปกิจกรรม',
           headerStyle: {
             backgroundColor: 'orange'
           }
