@@ -66,7 +66,7 @@ export default class AvailableActivitiesScreen extends React.Component {
       }
     );
 
-    console.log(filledActivities);
+    console.log('filledActivities: ', filledActivities);
 
     return (
       <Container style={styles.container}>

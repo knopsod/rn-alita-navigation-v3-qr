@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
 import { Text, StyleSheet, AsyncStorage } from 'react-native'
+import React, { Component } from 'react'
+
 import {
   Container,
   Content,

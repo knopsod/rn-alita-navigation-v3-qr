@@ -37,6 +37,8 @@ export default class SelfyScreen extends React.Component {
       DateTimeOriginal: navigation.getParam('DateTimeOriginal', ''),
       GPSLatitude: navigation.getParam('GPSLatitude', 0),
       GPSLongitude: navigation.getParam('GPSLongitude', 0),
+      Make: navigation.getParam('Make', ''),
+      Model: navigation.getParam('Model', ''),
     };
 
     console.log(`_key: ${this.state._key}, uri: ${this.state.uri}`);
@@ -50,15 +52,16 @@ export default class SelfyScreen extends React.Component {
     if (!result.cancelled) {
       console.log('!result.cancelled');
       console.log('result: ', result);
-      const { DateTimeOriginal, GPSLatitude, GPSLongitude } = result.exif;
-      console.log(DateTimeOriginal, GPSLatitude, GPSLongitude);
+      const { DateTimeOriginal, GPSLatitude, GPSLongitude, Make, Model } = result.exif;
+      console.log(DateTimeOriginal, GPSLatitude, GPSLongitude, Make, Model);
       this.uploadImage(result.uri)
         .then((response) => {
           console.log(response);
-          this.onUploaded(response, DateTimeOriginal, GPSLatitude, GPSLongitude);
+          this.onUploaded(response, DateTimeOriginal, GPSLatitude, GPSLongitude, Make, Model);
           Alert.alert('อัพโหลด', 'สำเร็จ')
         })
         .catch((error) => {
+          console.log('error: ', error);
           Alert.alert('อัพโหลด', 'ล้มเหลว')
         });
     }
@@ -95,8 +98,8 @@ export default class SelfyScreen extends React.Component {
 
     return await snapshot.ref.getDownloadURL();
   }
-  onUploaded = (uri, DateTimeOriginal, GPSLatitude, GPSLongitude) => {
-    console.log(DateTimeOriginal, GPSLatitude, GPSLongitude);
+  onUploaded = (uri, DateTimeOriginal, GPSLatitude, GPSLongitude, Make, Model) => {
+    console.log(DateTimeOriginal, GPSLatitude, GPSLongitude, Make, Model);
     const { _key, activityKey, activityName, dateTime, userId } = this.state;
     // const dateTime = moment(new Date()).format("YYYY-MM-DD hh:mm:ss");
 
@@ -109,19 +112,21 @@ export default class SelfyScreen extends React.Component {
       dateTime, 
       userId,
       uri,
-      DateTimeOriginal,
-      GPSLatitude,
-      GPSLongitude
+      DateTimeOriginal: DateTimeOriginal ? DateTimeOriginal : null,
+      GPSLatitude: GPSLatitude ? GPSLatitude : null,
+      GPSLongitude: GPSLongitude ? GPSLongitude : null,
+      Make: Make ? Make : null,
+      Model: Model ? Model : null,
     });
     set.then(() => {
-      this.setState({ uri, DateTimeOriginal, GPSLatitude, GPSLongitude });
+      this.setState({ uri, DateTimeOriginal, GPSLatitude, GPSLongitude, Make, Model });
     });
   }
   
   render() {
     const halfWidth = Dimensions.get('screen').width/2;
     const scWidth = Dimensions.get('screen').width - 10;
-    const { uri, DateTimeOriginal, GPSLatitude, GPSLongitude } = this.state;
+    const { uri, DateTimeOriginal, GPSLatitude, GPSLongitude, Make, Model } = this.state;
     return (
       <Container style={styles.container}>
         <Content>
@@ -135,26 +140,30 @@ export default class SelfyScreen extends React.Component {
           </Form>
           <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
             <Text>{`เมื่อ : ${DateTimeOriginal}`}</Text>
-            <Text>{`ลติจูด: ${GPSLatitude}`}</Text>
-            <Text>{`ลองจิจูด: ${GPSLongitude}`}</Text>
+            <Text>{`อุปกรณ์ : ${Make} ${Model}`}</Text>
+            <Text>{`ลติจูด: ${GPSLatitude ? GPSLatitude : '-'}`}</Text>
+            <Text>{`ลองจิจูด: ${GPSLongitude ? GPSLongitude : '-'}`}</Text>
           </Form>
-          <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
-            <MapView style={{ width: scWidth, height: scWidth }}
-              initialRegion={{
-                latitude: GPSLatitude,
-                longitude: GPSLongitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-            >
-              <MapView.Marker
-                coordinate={{
+          { GPSLatitude && GPSLongitude ?
+            <Form style={{ marginTop: 15, marginLeft: 5, marginRight: 5 }}>
+              <MapView style={{ width: scWidth, height: scWidth }}
+                initialRegion={{
                   latitude: GPSLatitude,
                   longitude: GPSLongitude,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
                 }}
-                />
-            </MapView>
-          </Form>
+              >
+                <MapView.Marker
+                  coordinate={{
+                    latitude: GPSLatitude,
+                    longitude: GPSLongitude,
+                  }}
+                  />
+              </MapView>
+            </Form>
+            : undefined
+          }
         </Content>
       </Container>
     );
