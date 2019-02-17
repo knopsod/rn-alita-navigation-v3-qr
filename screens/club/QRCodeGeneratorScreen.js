@@ -41,7 +41,7 @@ export default class QRCodeGeneratorScreen extends React.Component {
       console.log("do something with ", uri);
       let saveResult = await CameraRoll.saveToCameraRoll(uri, 'photo');
       if (saveResult) {
-        Alert.alert('บันทึก', 'สำเร็จ');
+        Alert.alert('ดาวน์โหลด', 'สำเร็จ');
       }
     });
   }
