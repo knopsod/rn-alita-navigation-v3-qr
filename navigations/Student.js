@@ -17,6 +17,7 @@ import HistoryScreen from '../screens/student/HistoryScreen';
 import StudentProfileScreen from '../screens/student/StudentProfileScreen';
 import SelfyScreen from '../screens/student/SelfyScreen';
 import AvailableActivitiesScreen from '../screens/student/AvailableActivitesScreen';
+import AvailableScanScreen from '../screens/student/AvailableScanScreen';
 
 const ScanStack = createStackNavigator(
   {
@@ -118,28 +119,39 @@ const AvailableActivitiesStack = createStackNavigator(
           }
         }
       }
+    },
+    AvailableScanScreen: {
+      screen: AvailableScanScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'สแกนคิวอาร์โค้ด',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
     }
   }
 );
 
 const StudentTabNavigator = createBottomTabNavigator(
   {
-    Scan: {
-      screen: ScanStack,
+    // Scan: {
+    //   screen: ScanStack,
+    //   navigationOptions: {
+    //     title: 'สแกนคิวอาร์โค้ด'
+    //   }
+    // },
+    Available: {
+      screen: AvailableActivitiesStack,
       navigationOptions: {
-        title: 'สแกนคิวอาร์โค้ด'
+        title: 'ข้อมูลกิจกรรม'
       }
     },
     History: {
       screen: HistoryStack,
       navigationOptions: {
         title: 'ข้อมูลการเข้าร่วมกิจกรรม'
-      }
-    },
-    Available: {
-      screen: AvailableActivitiesStack,
-      navigationOptions: {
-        title: 'ข้อมูลกิจกรรม'
       }
     }
   }, {

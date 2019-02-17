@@ -77,6 +77,7 @@ export default class AvailableActivitiesScreen extends React.Component {
               const { id, name } = data;
               return <ListItem
                 button
+                onPress={() => this.props.navigation.navigate('AvailableScanScreen', data)}
               >
                 <Left>
                   <Text>
@@ -84,7 +85,7 @@ export default class AvailableActivitiesScreen extends React.Component {
                   </Text>
                 </Left>
                 <Right>
-                  {/* <Icon name="arrow-forward" /> */}
+                  <Icon name="arrow-forward" />
                 </Right>
               </ListItem>}
             }
