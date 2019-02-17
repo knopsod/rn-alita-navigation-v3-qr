@@ -24,6 +24,7 @@ import QRCode from 'react-native-qrcode';
 // https://github.com/facebook/react-native/issues/16223
 // https://facebook.github.io/react-native/docs/cameraroll
 import ViewShot from "react-native-view-shot";
+import { Permissions } from 'expo';
 
 export default class QRCodeGeneratorScreen extends React.Component {
   constructor(props) {
@@ -36,14 +37,21 @@ export default class QRCodeGeneratorScreen extends React.Component {
     };
   }
 
-  onDownload = () => {
-    this.refs.viewShot.capture().then(async (uri) => {
-      console.log("do something with ", uri);
-      let saveResult = await CameraRoll.saveToCameraRoll(uri, 'photo');
-      if (saveResult) {
-        Alert.alert('ดาวน์โหลด', 'สำเร็จ');
-      }
-    });
+  onDownload = async () => {
+
+    // https://stackoverflow.com/questions/42797443/react-native-savetocameraroll-failed-with-permission-denied-error-on-android
+    let { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+    if (status === 'granted') {
+      // await CameraRoll.saveToCameraRoll(fileUrl, "photo");
+      this.refs.viewShot.capture().then(async (uri) => {
+        console.log("do something with ", uri);
+        let saveResult = await CameraRoll.saveToCameraRoll(uri, 'photo');
+        if (saveResult) {
+          Alert.alert('ดาวน์โหลด', 'สำเร็จ');
+        }
+      });
+    }
   }
   
   render() {
