@@ -17,6 +17,7 @@ import HistoryScreen from '../screens/student/HistoryScreen';
 import StudentProfileScreen from '../screens/student/StudentProfileScreen';
 import SelfyScreen from '../screens/student/SelfyScreen';
 import AvailableActivitiesScreen from '../screens/student/AvailableActivitesScreen';
+import AvailableDetailScreen from '../screens/student/AvailableDetailScreen';
 import AvailableScanScreen from '../screens/student/AvailableScanScreen';
 
 const ScanStack = createStackNavigator(
@@ -114,6 +115,17 @@ const AvailableActivitiesStack = createStackNavigator(
               }}
               name="md-log-out" size={30} />
           ),
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    AvailableDetailScreen: {
+      screen: AvailableDetailScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'ข้อมูลกิจกรรม',
           headerStyle: {
             backgroundColor: 'orange'
           }

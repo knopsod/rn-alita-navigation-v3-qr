@@ -77,7 +77,7 @@ export default class AvailableActivitiesScreen extends React.Component {
               const { id, name } = data;
               return <ListItem
                 button
-                onPress={() => this.props.navigation.navigate('AvailableScanScreen', data)}
+                onPress={() => this.props.navigation.navigate('AvailableDetailScreen', data)}
               >
                 <Left>
                   <Text>
