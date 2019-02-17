@@ -121,6 +121,10 @@ export default class SelfyScreen extends React.Component {
     set.then(() => {
       this.setState({ uri, DateTimeOriginal, GPSLatitude, GPSLongitude, Make, Model });
     });
+
+    if ( !Make || !Model ) {
+      Alert.alert('คำเตือน', 'รูปภาพไม่มีพิกัด, กรุณาเปิด GPS')
+    }
   }
   
   render() {
