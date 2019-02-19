@@ -15,6 +15,7 @@ import ReportsScreen from '../screens/vicepresident/ReportsScreen';
 import ReportDetailScreen from '../screens/vicepresident/ReportDetailScreen';
 import ThumbnailReportDetailScreen from '../screens/vicepresident/ThumbnailReportDetailScreen';
 import VicePresidentProfileScreen from '../screens/vicepresident/VicePresidentProfileScreen';
+import VicePresidentProfileEditableScreen from '../screens/vicepresident/VicePresidentProfileEditableScreen';
 
 const ReportsStack = createStackNavigator(
   {
@@ -105,25 +106,37 @@ const VicePresidentStackNavigator = createStackNavigator(
 
 const VicePresidentProfileStackNavigator = createStackNavigator(
   {
-    VicePresidentProfileScreen: VicePresidentProfileScreen
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => {
-      return {
-        headerLeft: (
-          <Icon 
-            style={{ paddingLeft: 10 }}
-            onPress={() => navigation.openDrawer()}
-            name="md-menu" size={30} />
-        ),
-        headerRight: (
-          <Icon 
-            style={{ paddingRight: 10 }}
-            onPress={() => navigation.navigate('WelcomeScreen')}
-            name="md-log-out" size={30} />
-        ),
-        headerStyle: {
-          backgroundColor: 'orange'
+    VicePresidentProfileScreen: {
+      screen: VicePresidentProfileScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerLeft: (
+            <Icon 
+              style={{ paddingLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+              name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
+          ),
+          headerTitle: 'โปรไฟล์รองคณบดี',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    VicePresidentProfileEditableScreen: {
+      screen: VicePresidentProfileEditableScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'แก้ไขโปรไฟล์',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
         }
       }
     }

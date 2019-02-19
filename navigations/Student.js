@@ -247,7 +247,7 @@ const StudentProfileStackNavigator = createStackNavigator(
               onPress={() => navigation.navigate('WelcomeScreen')}
               name="md-log-out" size={30} />
           ),
-          headerTitle: 'โปรไฟล์',
+          headerTitle: 'โปรไฟล์นักศึกษา',
           headerStyle: {
             backgroundColor: 'orange'
           }
