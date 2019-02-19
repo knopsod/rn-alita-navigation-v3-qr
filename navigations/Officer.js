@@ -20,6 +20,7 @@ import AddOfficerScreen from '../screens/officer/AddOfficerScreen';
 import VicePresidentsScreen from '../screens/officer/VicePresidentsScreen';
 import AddVicePresidentScreen from '../screens/officer/AddVicePresidentScreen';
 import OfficerProfileScreen from '../screens/officer/OfficerProfileScreen';
+import OfficerProfileEditableScreen from '../screens/officer/OfficerProfileEditableScreen';
 
 const UsersStack = createStackNavigator(
   {
@@ -222,25 +223,37 @@ const UsersStackNavigator = createStackNavigator(
 
 const OfficerProfileStackNavigator = createStackNavigator(
   {
-    OfficerProfileScreen: OfficerProfileScreen
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => {
-      return {
-        headerLeft: (
-          <Icon 
-            style={{ paddingLeft: 10 }}
-            onPress={() => navigation.openDrawer()}
-            name="md-menu" size={30} />
-        ),
-        headerRight: (
-          <Icon 
-            style={{ paddingRight: 10 }}
-            onPress={() => navigation.navigate('WelcomeScreen')}
-            name="md-log-out" size={30} />
-        ),
-        headerStyle: {
-          backgroundColor: 'orange'
+    OfficerProfileScreen: {
+      screen: OfficerProfileScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerLeft: (
+            <Icon 
+              style={{ paddingLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+              name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
+          ),
+          headerTitle: 'โปรไฟล์',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    OfficerProfileEditableScreen: {
+      screen: OfficerProfileEditableScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'แก้ไขโปรไฟล์',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
         }
       }
     }
