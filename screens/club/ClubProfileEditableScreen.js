@@ -15,7 +15,7 @@ import {
 
 import firebase from '../../Firebase'
 
-export default class ClubProfileScreen extends Component {
+export default class ClubProfileEditableScreen extends Component {
   constructor(props) {
     super(props);
     const { navigation } = props;
@@ -35,7 +35,7 @@ export default class ClubProfileScreen extends Component {
     // https://www.google.com/search?q=asyncstorage+setitem+object&oq=AsyncStorage+obj&aqs=chrome.3.69i57j69i60j0l4.12326j0j7&sourceid=chrome&ie=UTF-8
     // https://stackoverflow.com/questions/35596187/react-native-asyncstorage-storing-values-other-than-strings
     // https://medium.com/@richardzhanguw/storing-and-retrieving-objects-using-asyncstorage-in-react-native-6bb1745fdcdd
-    console.log('cmd: ClubProfileScreen');
+    console.log('cmd: ClubProfileEditableScreen');
     AsyncStorage.getItem('User')
       .then(data => {
         const user = JSON.parse(data);
@@ -210,15 +210,9 @@ export default class ClubProfileScreen extends Component {
                 onChangeText={val => this.setState({ phoneNo: val })} />
             </Item>
           </Form>
-          { false && 
-            <Button block style={{ margin: 5, marginTop: 20 }}
-              onPress={() => this.onPress()}>
-              <Text style={{ color: '#fff' }}>{ _key ? 'บันทึก' : 'สร้างใหม่'}</Text>
-            </Button>
-          }
           <Button block style={{ margin: 5, marginTop: 20 }}
-            onPress={() => this.props.navigation.navigate('ClubProfileEditableScreen')}>
-            <Text style={{ color: '#fff' }}>แก้ไข</Text>
+            onPress={() => this.onPress()}>
+            <Text style={{ color: '#fff' }}>{ _key ? 'บันทึก' : 'สร้างใหม่'}</Text>
           </Button>
         </Content>
       </Container>

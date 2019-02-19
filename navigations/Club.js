@@ -17,6 +17,7 @@ import ReportingScreen from '../screens/club/ReportingScreen';
 import AddActivityScreen from '../screens/club/AddActivityScreen';
 import AddReportScreen from '../screens/club/AddReportDetail';
 import ClubProfileScreen from '../screens/club/ClubProfileScreen';
+import ClubProfileEditableScreen from '../screens/club/ClubProfileEditableScreen';
 import PicturesScreen from '../screens/club/PicturesScreen';
 import AddPictureScreen from '../screens/club/AddPictureScreen';
 import ThumbnailPictureScreen from '../screens/club/ThumbnailPictureScreen';
@@ -281,25 +282,37 @@ const ClubStackNavigator = createStackNavigator(
 
 const ClubProfileStackNavigator = createStackNavigator(
   {
-    ClubProfileScreen: ClubProfileScreen
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => {
-      return {
-        headerLeft: (
-          <Icon 
-            style={{ paddingLeft: 10 }}
-            onPress={() => navigation.openDrawer()}
-            name="md-menu" size={30} />
-        ),
-        headerRight: (
-          <Icon 
-            style={{ paddingRight: 10 }}
-            onPress={() => navigation.navigate('WelcomeScreen')}
-            name="md-log-out" size={30} />
-        ),
-        headerStyle: {
-          backgroundColor: 'orange'
+    ClubProfileScreen: {
+      screen: ClubProfileScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerLeft: (
+            <Icon 
+              style={{ paddingLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+              name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
+          ),
+          headerTitle: 'โปรไฟล์',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    ClubProfileEditableScreen: {
+      screen: ClubProfileEditableScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'แก้ไขโปรไฟล์',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
         }
       }
     }
