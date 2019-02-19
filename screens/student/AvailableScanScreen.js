@@ -26,7 +26,6 @@ export default class AvailableScanScreen extends Component {
     AsyncStorage.setItem('activityKey', data);
 
     navigation.goBack();
-    navigation.goBack();
     navigation.navigate('History');
   }
   render() {

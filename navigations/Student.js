@@ -15,6 +15,7 @@ import {
 import ScanScreen from '../screens/student/ScanScreen';
 import HistoryScreen from '../screens/student/HistoryScreen';
 import StudentProfileScreen from '../screens/student/StudentProfileScreen';
+import StudentProfileEditableScreen from '../screens/student/StudentProfileEditableScreen';
 import SelfyScreen from '../screens/student/SelfyScreen';
 import AvailableActivitiesScreen from '../screens/student/AvailableActivitesScreen';
 import AvailableDetailScreen from '../screens/student/AvailableDetailScreen';
@@ -230,25 +231,37 @@ const StudentStackNavigator = createStackNavigator(
 
 const StudentProfileStackNavigator = createStackNavigator(
   {
-    StudentProfileScreen: StudentProfileScreen
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => {
-      return {
-        headerLeft: (
-          <Icon 
-            style={{ paddingLeft: 10 }}
-            onPress={() => navigation.openDrawer()}
-            name="md-menu" size={30} />
-        ),
-        headerRight: (
-          <Icon 
-            style={{ paddingRight: 10 }}
-            onPress={() => navigation.navigate('WelcomeScreen')}
-            name="md-log-out" size={30} />
-        ),
-        headerStyle: {
-          backgroundColor: 'orange'
+    StudentProfileScreen: {
+      screen: StudentProfileScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerLeft: (
+            <Icon 
+              style={{ paddingLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+              name="md-menu" size={30} />
+          ),
+          headerRight: (
+            <Icon 
+              style={{ paddingRight: 10 }}
+              onPress={() => navigation.navigate('WelcomeScreen')}
+              name="md-log-out" size={30} />
+          ),
+          headerTitle: 'โปรไฟล์',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
+        }
+      }
+    },
+    StudentProfileEditableScreen: {
+      screen: StudentProfileEditableScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'แก้ไขโปรไฟล์',
+          headerStyle: {
+            backgroundColor: 'orange'
+          }
         }
       }
     }
