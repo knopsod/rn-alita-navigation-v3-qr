@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, AsyncStorage } from 'react-native'
+import { Text, StyleSheet, AsyncStorage, Dimensions } from 'react-native'
 import {
   Container,
   Content,
@@ -10,8 +10,10 @@ import {
   Radio,
   Picker,
   Title,
-  Header
+  Header,
+  Thumbnail
 } from "native-base";
+import { NavigationEvents } from 'react-navigation';
 
 import firebase from '../../Firebase'
 
@@ -123,45 +125,54 @@ export default class StudentProfileScreen extends Component {
       faculty, 
       status, 
       phoneNo } = this.state;
+    
+    const halfWidth = Dimensions.get('screen').width/2 - 70;
+
     return (
       <Container style={styles.container}>
+        <NavigationEvents
+          onDidFocus={payload => console.log('did focus',payload)} />
         <Content>
           <Form style={{ marginTop: 20 }}>
+            <Form style={{ marginLeft: halfWidth }}>
+              <Thumbnail large source={require('../../assets/logo.jpg')}
+                style={{ borderRadius: 70, width: 140, height: 140 }}/>
+            </Form>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสนักศึกษา" name="userId"
                 keyboardType="numeric"
-                value={userId}
+                value={userId} editable={false}
                 onChangeText={val => this.setState({ userId: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="เลขบัตรประชาชน" name="idCardNo"
                 keyboardType="numeric"
-                value={idCardNo}
+                value={idCardNo} editable={false}
                 onChangeText={val => this.setState({ idCardNo: val })} />
             </Item>
             <Item style={{ marginRight: 15, flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
-              <Radio selected={prefix === 'mr'}
+              <Radio selected={prefix === 'mr'} disabled
                 onPress={() => this.onPressMr()} />
               <Text> นาย     </Text>
-              <Radio selected={prefix === 'mrs'}
+              <Radio selected={prefix === 'mrs'} disabled
                 onPress={() => this.onPressMrs()} />
               <Text> นาง     </Text>
-              <Radio selected={prefix === 'ms'}
+              <Radio selected={prefix === 'ms'} disabled
                 onPress={() => this.onPressMs()} />
               <Text> นางสาว</Text>
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="ชื่อ" name="firstName"
-                value={firstName}
+                value={firstName} editable={false}
                 onChangeText={val => this.setState({ firstName: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="นามสกุล" name="lastname"
-                value={lastName}
+                value={lastName} editable={false}
                 onChangeText={val => this.setState({ lastName: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
-              <Picker
+              <Picker enabled={false}
                 headerComponent={
                   <Header>
                     <Button transparent>
@@ -186,7 +197,7 @@ export default class StudentProfileScreen extends Component {
               </Picker>
             </Item>
             <Item style={{ marginRight: 15 }}>
-            <Picker
+            <Picker enabled={false}
                 headerComponent={
                   <Header>
                     <Button transparent>
@@ -205,7 +216,7 @@ export default class StudentProfileScreen extends Component {
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="เบอร์โทรศัพท์" name="phoneNo"
                 keyboardType="phone-pad"
-                value={phoneNo}
+                value={phoneNo} editable={false}
                 onChangeText={val => this.setState({ phoneNo: val })} />
             </Item>
           </Form>

@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, AsyncStorage } from 'react-native'
+import { Text, StyleSheet, AsyncStorage, Dimensions } from 'react-native'
 import {
   Container,
   Content,
   Button,
   Item,
   Input,
-  Form
+  Form,
+  Thumbnail
 } from "native-base";
+import { NavigationEvents } from 'react-navigation';
 
 import firebase from '../../Firebase'
 
@@ -83,35 +85,44 @@ export default class VicePresidentProfileScreen extends Component {
       lastName,
       phoneNo,
       position } = this.state;
+    
+      const halfWidth = Dimensions.get('screen').width/2 - 70;
+
     return (
       <Container style={styles.container}>
+        <NavigationEvents
+          onDidFocus={payload => console.log('did focus',payload)} />
         <Content>
           <Form style={{ marginTop: 20 }}>
-          <Item style={{ marginRight: 15 }}>
+            <Form style={{ marginLeft: halfWidth }}>
+                <Thumbnail large source={require('../../assets/logo.jpg')}
+                  style={{ borderRadius: 70, width: 140, height: 140 }}/>
+            </Form>
+            <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสรองคณบดี" name="userId"
                 keyboardType="numeric"
-                value={userId}
+                value={userId} editable={false}
                 onChangeText={val => this.setState({ userId: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="ชื่อ" name="firstName"
-                value={firstName}
+                value={firstName} editable={false}
                 onChangeText={val => this.setState({ firstName: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="นามสกุล" name="lastname"
-                value={lastName}
+                value={lastName} editable={false}
                 onChangeText={val => this.setState({ lastName: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="เบอร์โทรศัพท์" name="phoneNo"
-                value={phoneNo}
+                value={phoneNo} editable={false}
                 keyboardType="phone-pad"
                 onChangeText={val => this.setState({ phoneNo: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="ตำแหน่ง" name="position"
-                value={position}
+                value={position} editable={false}
                 onChangeText={val => this.setState({ position: val })} />
             </Item>
           </Form>

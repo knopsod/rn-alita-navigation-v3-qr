@@ -49,47 +49,47 @@ export default class AddActivityScreen extends React.Component {
           <Form style={{ marginTop: 20 }}>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสโครงการ" name="id"
-                keyboardType="numeric"
+                keyboardType="numeric" editable={false}
                 value={id}
                 onChangeText={val => this.setState({ id: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="ชื่อโครงการ" name="name"
-                value={name}
+                value={name} editable={false}
                 onChangeText={val => this.setState({ name: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="ฝ่ายดำเนินการ" name="operationDepartment"
-                value={operationDepartment}
+                value={operationDepartment} editable={false}
                 onChangeText={val => this.setState({ operationDepartment: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="ลักษณะของโครงการ" name="characteristic"
-                value={characteristic}
+                value={characteristic} editable={false}
                 onChangeText={val => this.setState({ characteristic: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="วัตถุประสงค์" name="objective"
-                value={objective}
+                value={objective} editable={false}
                 onChangeText={val => this.setState({ objective: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="สถานที่จัดกิจกรรม" name="location"
-                value={location}
+                value={location} editable={false}
                 onChangeText={val => this.setState({ location: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="ระยะเวลา" name="period"
-                value={period}
+                value={period} editable={false}
                 onChangeText={val => this.setState({ period: val })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="ผู้เข้าร่วมกิจกรรม" name="users"
-                />
+                 editable={false} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="แผนการดำเนินการ" name="plan"
-                value={plan}
+                value={plan} editable={false}
                 onChangeText={val => this.setState({ plan: val })} />
             </Item>
           </Form>
