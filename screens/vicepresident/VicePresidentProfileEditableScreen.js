@@ -75,6 +75,9 @@ export default class VicePresidentProfileEditableScreen extends Component {
 
     //   this.props.navigation.goBack();
     // });
+    
+    AsyncStorage.setItem('User', JSON.stringify(this.state));
+    this.props.navigation.goBack();
   }
   render() {
     const { _key,

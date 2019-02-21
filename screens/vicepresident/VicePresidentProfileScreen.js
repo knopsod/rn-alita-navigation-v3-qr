@@ -78,6 +78,15 @@ export default class VicePresidentProfileScreen extends Component {
     //   this.props.navigation.goBack();
     // });
   }
+  focusHandler = () => {
+    AsyncStorage.getItem('User')
+      .then(data => {
+        const user = JSON.parse(data);
+        this.setState({
+          ...user
+        });
+      });
+  }
   render() {
     const { _key,
       userId,
@@ -91,7 +100,7 @@ export default class VicePresidentProfileScreen extends Component {
     return (
       <Container style={styles.container}>
         <NavigationEvents
-          onDidFocus={payload => console.log('did focus',payload)} />
+          onDidFocus={payload => this.focusHandler()} />
         <Content>
           <Form style={{ marginTop: 20 }}>
             <Form style={{ marginLeft: halfWidth }}>
