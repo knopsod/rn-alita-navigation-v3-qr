@@ -31,6 +31,7 @@ export default class ClubProfileScreen extends Component {
       faculty: navigation.getParam('faculty', 'เทคโนโลยีสารสนเทศ'),
       status: 'c',
       phoneNo: navigation.getParam('phoneNo', ''),
+      uri: navigation.getParam('uri', ''),
     };
   }
   componentDidMount() {
@@ -126,7 +127,8 @@ export default class ClubProfileScreen extends Component {
       });
   }
   render() {
-    const { _key, 
+    const { 
+      _key, 
       userId, 
       idCardNo, 
       prefix, 
@@ -134,9 +136,11 @@ export default class ClubProfileScreen extends Component {
       lastName, 
       faculty, 
       status, 
-      phoneNo } = this.state;
+      phoneNo,
+      uri 
+    } = this.state;
     
-      const halfWidth = Dimensions.get('screen').width/2 - 70;
+    const halfWidth = Dimensions.get('screen').width/2 - 70;
 
     return (
       <Container style={styles.container}>
@@ -145,8 +149,13 @@ export default class ClubProfileScreen extends Component {
         <Content>
           <Form style={{ marginTop: 20 }}>
             <Form style={{ marginLeft: halfWidth }}>
+              { uri === '' ? 
                 <Thumbnail large source={require('../../assets/logo.jpg')}
                   style={{ borderRadius: 70, width: 140, height: 140 }}/>
+                :
+                <Thumbnail large source={{ uri: uri }}
+                  style={{ borderRadius: 70, width: 140, height: 140 }}/>
+              }
             </Form>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสนักศึกษา" name="userId"

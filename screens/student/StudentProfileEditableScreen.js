@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, AsyncStorage } from 'react-native'
+import { Text, StyleSheet, AsyncStorage, Dimensions, Alert } from 'react-native'
 import {
   Container,
   Content,
@@ -10,10 +10,14 @@ import {
   Radio,
   Picker,
   Title,
-  Header
+  Header,
+  Thumbnail
 } from "native-base";
 
-import firebase from '../../Firebase'
+import firebase from '../../Firebase';
+import { ImagePicker, Permissions, MapView } from 'expo';
+import uuid from 'uuid';
+import moment from 'moment';
 
 export default class StudentProfileEditableScreen extends Component {
   constructor(props) {
@@ -29,6 +33,7 @@ export default class StudentProfileEditableScreen extends Component {
       faculty: navigation.getParam('faculty', 'เทคโนโลยีสารสนเทศ'),
       status: 's',
       phoneNo: navigation.getParam('phoneNo', ''),
+      uri: navigation.getParam('uri', ''),
     };
   }
   componentDidMount() {
@@ -116,8 +121,97 @@ export default class StudentProfileEditableScreen extends Component {
     AsyncStorage.setItem('User', JSON.stringify(this.state));
     this.props.navigation.goBack();
   }
+  
+  // https://www.youtube.com/watch?v=KkZckepfm2Q
+  // https://github.com/expo/firebase-storage-upload-example/blob/master/App.js
+  onChooseImagePress = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({ exif: true });
+
+    if (!result.cancelled) {
+      console.log('!result.cancelled');
+      console.log('result: ', result);
+      this.uploadImage(result.uri)
+        .then((response) => {
+          console.log(response);
+          this.onUploaded(response);
+          Alert.alert('อัพโหลด', 'สำเร็จ')
+        })
+        .catch((error) => {
+          console.log('error: ', error);
+          Alert.alert('อัพโหลด', 'ล้มเหลว')
+        });
+    }
+  }
+  uploadImage = async (uri) => {
+    const { _key } = this.state;
+    
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function(e) {
+        console.log(e);
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', uri, true);
+      xhr.send(null);
+    });
+
+    const uuID = uuid.v4();
+
+    var ref = firebase.storage().ref('Users/' + _key).child(uuID);
+    const snapshot = await ref.put(blob);
+
+    this.setState({
+      _key,
+      uuID,
+    });
+
+    // We're done with the blob, close and release it
+    blob.close();
+
+    return await snapshot.ref.getDownloadURL();
+  }
+  onUploaded = (uri) => {
+    const { 
+      _key,
+      userId, 
+      idCardNo,
+      prefix,
+      firstName, 
+      lastName,
+      faculty,
+      status,
+      phoneNo,
+    } = this.state;
+    // const dateTime = moment(new Date()).format("YYYY-MM-DD hh:mm:ss");
+
+    // https://www.youtube.com/watch?v=BWIN4JBm0-k&list=PLy9JCsy2u97m-xWAxGwHZ2vITtj4qBKDm&index=6
+    // https://github.com/nathvarun/React-Native-Firebase-Tutorials/blob/master/Project%20Files/4%265%20Swipeable%20Lists/Complete/App.js
+    var set = firebase.database().ref('Users').child(_key).set({ 
+      _key, 
+      userId, 
+      idCardNo,
+      prefix,
+      firstName, 
+      lastName,
+      faculty,
+      status,
+      phoneNo,
+      uri,
+    });
+    set.then(() => {
+      this.setState({ uri });
+    });
+
+    AsyncStorage.setItem('User', JSON.stringify({ ...this.state, uri }));
+  }
+
   render() {
-    const { _key, 
+    const { 
+      _key, 
       userId, 
       idCardNo, 
       prefix, 
@@ -125,11 +219,29 @@ export default class StudentProfileEditableScreen extends Component {
       lastName, 
       faculty, 
       status, 
-      phoneNo } = this.state;
+      phoneNo,
+      uri 
+    } = this.state;
+
+    const halfWidth = Dimensions.get('screen').width/2 - 70;
+
     return (
       <Container style={styles.container}>
         <Content>
           <Form style={{ marginTop: 20 }}>
+            <Form style={{ marginLeft: halfWidth }}>
+              { uri === '' ? 
+                <Thumbnail large source={require('../../assets/logo.jpg')}
+                  style={{ borderRadius: 70, width: 140, height: 140 }}/>
+                :
+                <Thumbnail large source={{ uri: uri }}
+                  style={{ borderRadius: 70, width: 140, height: 140 }}/>
+              }
+            </Form>
+            <Button block style={{ margin: 5 }}
+              onPress={this.onChooseImagePress}>
+              <Text style={{ color: '#fff' }}>อัพโหลด</Text>
+            </Button>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสนักศึกษา" name="userId"
                 keyboardType="numeric"

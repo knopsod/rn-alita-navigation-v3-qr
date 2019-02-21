@@ -25,6 +25,7 @@ export default class VicePresidentProfileScreen extends Component {
       status: 'v',
       phoneNo: navigation.getParam('phoneNo', ''),
       position: navigation.getParam('position', ''),
+      uri: navigation.getParam('uri', ''),
     };
   }
   componentDidMount() {
@@ -88,14 +89,17 @@ export default class VicePresidentProfileScreen extends Component {
       });
   }
   render() {
-    const { _key,
+    const { 
+      _key,
       userId,
       firstName,
       lastName,
       phoneNo,
-      position } = this.state;
+      position,
+      uri 
+    } = this.state;
     
-      const halfWidth = Dimensions.get('screen').width/2 - 70;
+    const halfWidth = Dimensions.get('screen').width/2 - 70;
 
     return (
       <Container style={styles.container}>
@@ -104,8 +108,13 @@ export default class VicePresidentProfileScreen extends Component {
         <Content>
           <Form style={{ marginTop: 20 }}>
             <Form style={{ marginLeft: halfWidth }}>
+              { uri === '' ? 
                 <Thumbnail large source={require('../../assets/logo.jpg')}
                   style={{ borderRadius: 70, width: 140, height: 140 }}/>
+                :
+                <Thumbnail large source={{ uri: uri }}
+                  style={{ borderRadius: 70, width: 140, height: 140 }}/>
+              }
             </Form>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสรองคณบดี" name="userId"

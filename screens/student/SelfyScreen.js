@@ -128,7 +128,6 @@ export default class SelfyScreen extends React.Component {
   }
   
   render() {
-    const halfWidth = Dimensions.get('screen').width/2;
     const scWidth = Dimensions.get('screen').width - 10;
     const { uri, DateTimeOriginal, GPSLatitude, GPSLongitude, Make, Model } = this.state;
     return (
