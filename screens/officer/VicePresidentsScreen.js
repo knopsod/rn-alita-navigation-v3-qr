@@ -8,7 +8,9 @@ import {
   ListItem,
   Left,
   Right,
-  Icon
+  Icon,
+  Thumbnail,
+  Body
 } from "native-base";
 
 import firebase from '../../Firebase'
@@ -63,17 +65,20 @@ export default class VicePresidentsScreen extends React.Component {
           <List
             dataArray={vicePresidents}
             renderRow={data => {
+              const { userId, firstName, lastName, uri } = data;
               return <ListItem
-                button
+                thumbnail
                 onPress={() => {
                   this.props.navigation.navigate('AddVicePresidentScreen', data)
                 }}
               >
                 <Left>
-                  <Text>
-                    {data.userId}
-                  </Text>
+                  <Thumbnail square source={{ uri }} />
                 </Left>
+                <Body>
+                  <Text>{`${userId}`}</Text>
+                  <Text>{`${firstName} ${lastName}`}</Text>
+                </Body>
                 <Right>
                   <Icon name="arrow-forward" />
                 </Right>
