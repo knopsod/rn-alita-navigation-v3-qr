@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, Dimensions } from 'react-native'
 import {
   Container,
   Content,
@@ -10,7 +10,8 @@ import {
   Radio,
   Picker,
   Title,
-  Header
+  Header,
+  Thumbnail
 } from "native-base";
 
 import firebase from '../../Firebase'
@@ -29,6 +30,7 @@ export default class AddUserScreen extends React.Component {
       faculty: navigation.getParam('faculty', 'เทคโนโลยีสารสนเทศ'),
       status: navigation.getParam('status', 's'),
       phoneNo: navigation.getParam('phoneNo', ''),
+      uri: navigation.getParam('uri', ''),
     };
   }
   onPressMr = () => {
@@ -66,6 +68,7 @@ export default class AddUserScreen extends React.Component {
       faculty,
       status,
       phoneNo,
+      uri,
     } = this.state;
 
     if ( userId === '' ||
@@ -95,13 +98,15 @@ export default class AddUserScreen extends React.Component {
           faculty: '',
           status: '',
           phoneNo: '',
+          uri: '',
         });
 
         this.props.navigation.goBack();
     });
   }
   render() {
-    const { _key, 
+    const { 
+      _key, 
       userId, 
       idCardNo, 
       prefix, 
@@ -109,11 +114,25 @@ export default class AddUserScreen extends React.Component {
       lastName, 
       faculty, 
       status, 
-      phoneNo } = this.state;
+      phoneNo,
+      uri
+    } = this.state;
+
+    const halfWidth = Dimensions.get('screen').width/2 - 70;
+
     return (
       <Container style={styles.container}>
         <Content>
           <Form style={{ marginTop: 20 }}>
+            <Form style={{ marginLeft: halfWidth }}>
+              { uri === '' ? 
+                <Thumbnail large source={require('../../assets/logo.jpg')}
+                  style={{ borderRadius: 70, width: 140, height: 140 }}/>
+                :
+                <Thumbnail large source={{ uri: uri }}
+                  style={{ borderRadius: 70, width: 140, height: 140 }}/>
+              }
+            </Form>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสนักศึกษา" name="userId"
                 keyboardType="numeric"

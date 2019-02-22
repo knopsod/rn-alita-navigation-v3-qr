@@ -1,12 +1,13 @@
 import React from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, Dimensions } from 'react-native'
 import {
   Container,
   Content,
   Button,
   Item,
   Input,
-  Form
+  Form,
+  Thumbnail
 } from "native-base";
 
 import firebase from '../../Firebase'
@@ -23,6 +24,7 @@ export default class AddOfficerScreen extends React.Component {
       status: 'o',
       phoneNo: navigation.getParam('phoneNo', ''),
       position: navigation.getParam('position', ''),
+      uri: navigation.getParam('uri', ''),
     };
   }
   onPress = () => {
@@ -58,22 +60,38 @@ export default class AddOfficerScreen extends React.Component {
           status: '',
           phoneNo: '',
           position: '',
+          uri: '',
         });
 
         this.props.navigation.goBack();
     });
   }
   render() {
-    const { _key,
+    const { 
+      _key,
       userId,
       firstName,
       lastName,
       phoneNo,
-      position } = this.state;
+      position,
+      uri
+    } = this.state;
+
+    const halfWidth = Dimensions.get('screen').width/2 - 70;
+
     return (
       <Container style={styles.container}>
         <Content>
           <Form style={{ marginTop: 20 }}>
+            <Form style={{ marginLeft: halfWidth }}>
+              { uri === '' ? 
+                <Thumbnail large source={require('../../assets/logo.jpg')}
+                  style={{ borderRadius: 70, width: 140, height: 140 }}/>
+                :
+                <Thumbnail large source={{ uri: uri }}
+                  style={{ borderRadius: 70, width: 140, height: 140 }}/>
+              }
+            </Form>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="รหัสเจ้าหน้าที่" name="userId"
                 keyboardType="numeric"
