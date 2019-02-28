@@ -14,6 +14,8 @@ import {
   Thumbnail
 } from "native-base";
 
+import md5 from 'js-md5';
+
 import firebase from '../../Firebase'
 
 export default class AddUserScreen extends React.Component {
@@ -23,6 +25,8 @@ export default class AddUserScreen extends React.Component {
     this.state = {
       _key: navigation.getParam('_key', ''),
       userId: navigation.getParam('userId', ''),
+      password: navigation.getParam('password', ''),
+      passwordHasSet: false,
       idCardNo: navigation.getParam('idCardNo', ''),
       prefix: navigation.getParam('prefix', 'mr'),
       firstName: navigation.getParam('firstName', ''),
@@ -60,7 +64,9 @@ export default class AddUserScreen extends React.Component {
   }
   onPress = () => {
     const { 
-      userId, 
+      userId,
+      password,
+      passwordHasSet,
       idCardNo,
       prefix,
       firstName, 
@@ -87,10 +93,12 @@ export default class AddUserScreen extends React.Component {
     // https://www.youtube.com/watch?v=BWIN4JBm0-k&list=PLy9JCsy2u97m-xWAxGwHZ2vITtj4qBKDm&index=6
     // https://github.com/nathvarun/React-Native-Firebase-Tutorials/blob/master/Project%20Files/4%265%20Swipeable%20Lists/Complete/App.js
     var key = this.state._key ? this.state._key : firebase.database().ref('Users').push().key;
-    var set = firebase.database().ref('Users').child(key).set({ ...this.state, _key: key });
+    var set = firebase.database().ref('Users').child(key).set({ ...this.state, _key: key, password: passwordHasSet ? md5(password) : password });
     set.then((data) => {
         this.setState({
           userId: '',
+          password: '',
+          passwordHasSet: false,
           idCardNo: '',
           prefix: '',
           firstName: '',
@@ -108,6 +116,7 @@ export default class AddUserScreen extends React.Component {
     const { 
       _key, 
       userId, 
+      password, 
       idCardNo, 
       prefix, 
       firstName, 
@@ -138,6 +147,12 @@ export default class AddUserScreen extends React.Component {
                 keyboardType="numeric"
                 value={userId}
                 onChangeText={val => this.setState({ userId: val })} />
+            </Item>
+            <Item style={{ marginRight: 15 }}>
+              <Input placeholder="รหัสผ่าน" name="password" secureTextEntry
+                keyboardType="numeric"
+                value={password}
+                onChangeText={val => this.setState({ password: val, passwordHasSet: true })} />
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="เลขบัตรประชาชน" name="idCardNo"

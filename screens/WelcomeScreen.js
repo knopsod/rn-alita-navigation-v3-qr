@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, StyleSheet, Dimensions, AsyncStorage } from 'react-native'
+import { Text, StyleSheet, Dimensions, AsyncStorage, Alert } from 'react-native'
 import {
   Container,
   Content,
@@ -9,6 +9,8 @@ import {
   Form,
   Thumbnail,
 } from "native-base";
+
+import md5 from 'js-md5';
 
 import firebase from '../Firebase';
 
@@ -25,12 +27,19 @@ class WelcomeScreen extends React.Component {
   }
   onPress = () => {
     const { navigation } = this.props;
-    const { username } = this.state;    
+    const { username, password } = this.state;    
 
-    this.child.orderByChild('userId').equalTo(username).on('child_added', function(snapshot) {
+    this.child.orderByChild('userId').equalTo(username)
+      .on('child_added', function(snapshot) {
       
       const data = snapshot.val();
-      const { status } = snapshot.val();
+
+      const { status, password: md5Password } = snapshot.val();
+      
+      if ( md5(password) !== md5Password ) {
+        Alert.alert('เข้าสู่ระบบ', 'ล้มเหลว');
+        return;
+      }
 
       AsyncStorage.setItem('userId', data.userId);
       AsyncStorage.setItem('_userKey', data._key);
@@ -79,6 +88,7 @@ class WelcomeScreen extends React.Component {
             </Item>
             <Item style={{ marginRight: 15 }}>
               <Input placeholder="Password" secureTextEntry
+                keyboardType="numeric"
                 onChangeText={text => this.setState({ password: text })} />
             </Item>
             <Button block style={{ margin: 5, marginTop: 30 }}
