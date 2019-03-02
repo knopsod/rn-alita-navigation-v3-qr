@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, StyleSheet, Dimensions } from 'react-native'
+import { Text, StyleSheet, Dimensions, Alert } from 'react-native'
 import {
   Container,
   Content,
@@ -86,14 +86,20 @@ export default class AddUserScreen extends React.Component {
       status === '' ||
       phoneNo === '' ) 
     {
-      alert('กรุณาใส่ข้อมูลให้ครบ');
+      Alert.alert('ข้อมูล', 'ข้อมูลไม่สมบูรณ์');
       return;  
     }
 
     // https://www.youtube.com/watch?v=BWIN4JBm0-k&list=PLy9JCsy2u97m-xWAxGwHZ2vITtj4qBKDm&index=6
     // https://github.com/nathvarun/React-Native-Firebase-Tutorials/blob/master/Project%20Files/4%265%20Swipeable%20Lists/Complete/App.js
     var key = this.state._key ? this.state._key : firebase.database().ref('Users').push().key;
-    var set = firebase.database().ref('Users').child(key).set({ ...this.state, _key: key, password: passwordHasSet ? md5(password) : password });
+    var set = firebase.database().ref('Users').child(key).set(
+      { 
+        ...this.state, 
+        _key: key, 
+        password: passwordHasSet ? md5(password) : password 
+      }
+    );
     set.then((data) => {
         this.setState({
           userId: '',
